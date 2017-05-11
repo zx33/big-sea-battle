@@ -10,7 +10,7 @@ var index = require('./routes/index');
 var port = config.port;
 
 var battle_map = {
-    curr_max_room_id: 0,
+    curr_max_room_id: 1,
 };
 
 app.set('views', path.join(__dirname, 'views'));

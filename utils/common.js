@@ -79,7 +79,10 @@ util.date_formate = function (d, fmt) {
 
 util.on_error = function(res) {
     return function(err) {
-        res.send(util.return_json_response('error', JSON.stringify(err), {}));
+        if (!err instanceof String) {
+            err = JSON.stringify(err);
+        }
+        res.send(util.return_json_response('error', err, {}));
     }
 }
 
