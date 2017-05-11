@@ -6,3 +6,26 @@ var bodyParser = require('body-parser');
 var app = express();
 var config = require('./conf/conf');
 var index = require('./routes/index');
+
+var port = config.port;
+
+var battle_map = {
+    curr_max_room_id: 0,
+};
+
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use('/static', express.static(path.join(__dirname, 'public')));
+app.use(cookieParser());
+app.use((req, res, next) => {
+    req.battle_map = battle_map;
+    next();
+});
+app.use('/', index);
+
+app.listen(port, '127.0.0.1', () => {
+    console.log('App is listening on ', port);
+});
