@@ -33,8 +33,18 @@ router.get('/join_game', (req, res) => {
     });
 });
 
-router.get('/set_map', user_check, (req, res) => {
-    common_util.on_ok(res)();
+router.post('/set_map', user_check, (req, res) => {
+    var nickname = req.cookies.nickname;
+    var room_id = parseInt(req.cookies.room_id);
+    var map_info = req.body.map_info;
+
+    battle_util.set_map(req, room_id, nickname, map_info, (err) => {
+        if (err) {
+            common_util.on_error(res)(err);
+        } else {
+            common_util.on_ok(res)();
+        }
+    });
 });
 
 module.exports = router;
