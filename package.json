@@ -1,0 +1,29 @@
+{
+  "name": "big-sea-battle",
+  "version": "1.0.0",
+  "description": "backend server for big sea battle game",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zx33/big-sea-battle.git"
+  },
+  "author": "AndyBear",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zx33/big-sea-battle/issues"
+  },
+  "homepage": "https://github.com/zx33/big-sea-battle#readme",
+  "dependencies": {
+    "body-parser": "~1.15.1",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.2.0",
+    "ejs": "~2.4.1",
+    "express": "~4.13.4",
+    "morgan": "~1.7.0",
+    "q": "^1.5.0",
+    "serve-favicon": "~2.3.0"
+  }
+}
