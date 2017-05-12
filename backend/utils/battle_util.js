@@ -79,7 +79,7 @@ my_util.set_map = (req, room_id, nickname, map_info, cb) => {
     if (ship_cnt != 5) {
         return cb(error_util.err_map_info);
     }
-    if (!battle.maps[nickname]) {
+    if (battle.maps[nickname]) {
         return cb(error_util.err_map_setted);
     }
     battle.maps[nickname] = map_info;
@@ -154,7 +154,7 @@ my_util.set_op = (req, room_id, nickname, x, y, cb) => {
         battle.status = "end";
         is_end = 1;
     }
-    return cb(null);
+    return cb(null, is_end);
 }
 
 module.exports = my_util;
