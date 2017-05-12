@@ -81,11 +81,14 @@ router.post('/set_op', user_check, (req, res) => {
     var y = req.body.y;
     var nickname = req.cookies.nickname;
 
-    battle_util.set_op(req, room_id, nickname, x, y, (err) => {
+    battle_util.set_op(req, room_id, nickname, x, y, (err, is_end) => {
         if (err) {
             common_util.on_error(res)(err);
         } else {
-            common_util.on_ok(res)();
+            var ret = {
+                game_status: is_end
+            };
+            res.send(common_util.return_json_response('ok', '', ret));
         }
     });
 });

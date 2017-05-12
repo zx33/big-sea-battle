@@ -79,6 +79,9 @@ my_util.set_map = (req, room_id, nickname, map_info, cb) => {
     if (ship_cnt != 5) {
         return cb(error_util.err_map_info);
     }
+    if (!battle.maps[nickname]) {
+        return cb(error_util.err_map_setted);
+    }
     battle.maps[nickname] = map_info;
     battle.map_setted += 1;
     if (battle.map_setted == 2) {
@@ -118,6 +121,12 @@ my_util.set_op = (req, room_id, nickname, x, y, cb) => {
         return cb(error_util.err_out_of_range);
     }
     var battle = req.battle_map[room_id];
+    if (battle.status == "end") {
+        return cb(error_util.err_game_end);
+    }
+    if (battle.turns < 0) {
+        return cb(error_util.err_not_start);
+    }
     if (nickname != battle.players[battle.turns]) {
         return cb(error_util.err_op_turn);
     }
@@ -134,14 +143,16 @@ my_util.set_op = (req, room_id, nickname, x, y, cb) => {
         bingo: rival_map[index]
     };
     rival_map[index] += 10;
-    battle.op.push(op);
+    battle.ops.push(op);
     if (!op.bingo) {
         battle.turns += 1;
         battle.turns %= 2;
     }
+    var is_end = 0;
     if (check_all_killed(rival_map)) {
         battle.winner = nickname;
         battle.status = "end";
+        is_end = 1;
     }
     return cb(null);
 }
