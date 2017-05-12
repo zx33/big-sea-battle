@@ -75,4 +75,19 @@ router.get('/get_op', user_check, (req, res) => {
     });
 });
 
+router.post('/set_op', user_check, (req, res) => {
+    var room_id = parseInt(req.cookies.room_id);
+    var x = req.body.x;
+    var y = req.body.y;
+    var nickname = req.cookies.nickname;
+
+    battle_util.set_op(req, room_id, nickname, x, y, (err) => {
+        if (err) {
+            common_util.on_error(res)(err);
+        } else {
+            common_util.on_ok(res)();
+        }
+    });
+});
+
 module.exports = router;
