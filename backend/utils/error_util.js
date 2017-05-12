@@ -5,6 +5,7 @@ var util = {
     err_user_check: "Invalid verification information",
     err_repeat_name: "Nickname existed",
     err_wrong_map_size: "Invalid map information",
+    err_op_cnt: "Invalid operation count"
 };
 
 module.exports = util;

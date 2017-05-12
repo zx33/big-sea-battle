@@ -47,4 +47,32 @@ router.post('/set_map', user_check, (req, res) => {
     });
 });
 
+router.get('/curr_op_cnt', user_check, (req, res) => {
+    var room_id = parseInt(req.cookies.room_id);
+
+    battle_util.get_current_op_count(req, room_id, (op_cnt) => {
+        var ret = {
+            op_cnt: op_cnt
+        };
+        res.send(common_util.return_json_response('ok', '', ret));
+    });
+});
+
+router.get('/get_op', user_check, (req, res) => {
+    var room_id = parseInt(req.cookies.room_id);
+    var op_cnt = req.query.op_cnt;
+
+    battle_util.get_op(req, room_id, op_cnt, (err, op, turns) => {
+        if (err) {
+            common_util.on_error(res)(err);
+        } else {
+            var ret = {
+                op: op,
+                turns: turns
+            };
+            res.send(common_util.return_json_response('ok', '', ret));
+        }
+    });
+});
+
 module.exports = router;

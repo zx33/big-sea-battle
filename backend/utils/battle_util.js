@@ -68,4 +68,25 @@ my_util.set_map = (req, room_id, nickname, map_info, cb) => {
     return cb(null);
 }
 
+my_util.get_current_op_count = (req, room_id, cb) => {
+    var battle = req.battle_map[room_id];
+    return cb(battle.ops.length);
+}
+
+my_util.get_op = (req, room_id, op_cnt, cb) => {
+    if (!op_cnt) {
+        return cb(error_util.err_op_cnt);
+    } else {
+        op_cnt = parseInt(op_cnt);
+    }
+    var battle = req.battle_map[room_id];
+    var turns = battle.players[battle.turns];
+    if (op_cnt) {
+        var op = battle.op[op_cnt - 1];
+        return cb(null, op, turns);
+    } else {
+        return cb(null, null, turns);
+    }
+}
+
 module.exports = my_util;
