@@ -92,7 +92,10 @@ my_util.set_map = (req, room_id, nickname, map_info, cb) => {
 
 my_util.get_current_op_count = (req, room_id, cb) => {
     var battle = req.battle_map[room_id];
-    return cb(battle.ops.length);
+    if (battle.turns < 0) {
+        return cb(error_util.err_not_start);
+    }
+    return cb(null, battle.ops.length);
 }
 
 my_util.get_op = (req, room_id, op_cnt, cb) => {
@@ -104,7 +107,7 @@ my_util.get_op = (req, room_id, op_cnt, cb) => {
     var battle = req.battle_map[room_id];
     var turns = battle.players[battle.turns];
     if (op_cnt) {
-        var op = battle.op[op_cnt - 1];
+        var op = battle.ops[op_cnt - 1];
         return cb(null, op, turns);
     } else {
         return cb(null, null, turns);

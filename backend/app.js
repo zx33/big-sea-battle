@@ -7,7 +7,7 @@ var app = express();
 var config = require('./conf/conf');
 var index = require('./routes/index');
 
-var port = config.port;
+var port = 2333;
 
 var battle_map = {
     curr_max_room_id: 1,
@@ -26,6 +26,6 @@ app.use((req, res, next) => {
 });
 app.use('/', index);
 
-app.listen(port, '127.0.0.1', () => {
+app.listen(port, () => {
     console.log('App is listening on ', port);
 });
