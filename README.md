@@ -14,6 +14,7 @@
 
 ### Backend
 
+* 5.15 修复get\_op接口的Bug，优化在双方set_map阶段请求get\_op的返回结果
 * 5.14 添加后台相关start scripts命令
 * 5.12 修复程序中的小Bug，完善Error提示内容
 * 5.12 添加玩家获取操作、设置操作功能
