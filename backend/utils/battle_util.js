@@ -11,7 +11,7 @@ function get_rival(players, nickname) {
 }
 
 function map_range_check(x) {
-    return x >= 0 && x < 5;
+    return x >= 0 && x < 6;
 }
 
 function check_all_killed(map) {
