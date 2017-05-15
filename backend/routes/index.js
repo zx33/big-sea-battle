@@ -50,11 +50,15 @@ router.post('/set_map', user_check, (req, res) => {
 router.get('/curr_op_cnt', user_check, (req, res) => {
     var room_id = parseInt(req.cookies.room_id);
 
-    battle_util.get_current_op_count(req, room_id, (op_cnt) => {
-        var ret = {
-            op_cnt: op_cnt
-        };
-        res.send(common_util.return_json_response('ok', '', ret));
+    battle_util.get_current_op_count(req, room_id, (err, op_cnt) => {
+        if (err) {
+            common_util.on_error(res)(err);
+        } else {
+            var ret = {
+                op_cnt: op_cnt
+            };
+            res.send(common_util.return_json_response('ok', '', ret));
+        }
     });
 });
 
