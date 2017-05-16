@@ -11,7 +11,7 @@ function get_rival(players, nickname) {
 }
 
 function map_range_check(x) {
-    return x >= 0 && x < 5;
+    return x >= 0 && x < 6;
 }
 
 function check_all_killed(map) {
@@ -90,9 +90,26 @@ my_util.set_map = (req, room_id, nickname, map_info, cb) => {
     return cb(null);
 }
 
+my_util.get_status = (req, room_id, cb) => {
+    var battle = req.battle_map[room_id];
+    var turns = battle.turns;
+    cb(err, turns >= 0 ? 0 : turns);
+}
+
+my_util.get_players = (req, room_id, cb) => {
+    var battle = req.battle_map[room_id];
+    if (battle.turns < -1) {
+        return cb(error_util.err_not_start);
+    }
+    return cb(null, battle.players);
+}
+
 my_util.get_current_op_count = (req, room_id, cb) => {
     var battle = req.battle_map[room_id];
-    return cb(battle.ops.length);
+    if (battle.turns < 0) {
+        return cb(error_util.err_not_start);
+    }
+    return cb(null, battle.ops.length);
 }
 
 my_util.get_op = (req, room_id, op_cnt, cb) => {
@@ -104,7 +121,7 @@ my_util.get_op = (req, room_id, op_cnt, cb) => {
     var battle = req.battle_map[room_id];
     var turns = battle.players[battle.turns];
     if (op_cnt) {
-        var op = battle.op[op_cnt - 1];
+        var op = battle.ops[op_cnt - 1];
         return cb(null, op, turns);
     } else {
         return cb(null, null, turns);

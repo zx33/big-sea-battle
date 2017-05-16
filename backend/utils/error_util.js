@@ -12,7 +12,7 @@ var util = {
     err_coordinate: "Invalid coordinate",
     err_op_turn: "Not your turn",
     err_not_start: "Game not started",
-    err_game_end: "Game already ended"
+    err_game_end: "Game already ended",
 };
 
 module.exports = util;
