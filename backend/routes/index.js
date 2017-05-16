@@ -47,6 +47,21 @@ router.post('/set_map', user_check, (req, res) => {
     });
 });
 
+router.get('/get_status', user_check, (req, res) => {
+    var room_id = parseInt(req.cookies.room_id);
+
+    battle_util.get_status(req, room_id, (err, status) => {
+        if (err) {
+            common_util.on_error(res)(err);
+        } else {
+            var ret = {
+                status: status
+            };
+            res.send(common_util.return_json_response('ok', '', ret));
+        }
+    });
+});
+
 router.get('/curr_op_cnt', user_check, (req, res) => {
     var room_id = parseInt(req.cookies.room_id);
 

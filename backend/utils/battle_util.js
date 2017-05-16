@@ -90,6 +90,12 @@ my_util.set_map = (req, room_id, nickname, map_info, cb) => {
     return cb(null);
 }
 
+my_util.get_status = (req, room_id, cb) => {
+    var battle = req.battle_map[room_id];
+    var turns = battle.turns;
+    cb(err, turns >= 0 ? 0 : turns);
+}
+
 my_util.get_current_op_count = (req, room_id, cb) => {
     var battle = req.battle_map[room_id];
     if (battle.turns < 0) {
