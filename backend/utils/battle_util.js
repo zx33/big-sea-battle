@@ -96,6 +96,14 @@ my_util.get_status = (req, room_id, cb) => {
     cb(err, turns >= 0 ? 0 : turns);
 }
 
+my_util.get_players = (req, room_id, cb) => {
+    var battle = req.battle_map[room_id];
+    if (battle.turns < -1) {
+        return cb(error_util.err_not_start);
+    }
+    return cb(null, battle.players);
+}
+
 my_util.get_current_op_count = (req, room_id, cb) => {
     var battle = req.battle_map[room_id];
     if (battle.turns < 0) {

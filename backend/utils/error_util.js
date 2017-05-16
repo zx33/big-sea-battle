@@ -13,7 +13,6 @@ var util = {
     err_op_turn: "Not your turn",
     err_not_start: "Game not started",
     err_game_end: "Game already ended",
-    err_not_start: "Waiting player setting map"
 };
 
 module.exports = util;

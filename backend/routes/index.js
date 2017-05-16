@@ -62,6 +62,21 @@ router.get('/get_status', user_check, (req, res) => {
     });
 });
 
+router.get('/get_players', user_check, (req, res) => {
+    var room_id = parseInt(req.cookies.room_id);
+
+    battle_util.get_players(req, room_id, (err, players) => {
+        if (err) {
+            common_util.on_error(res)(err);
+        } else {
+            var ret = {
+                players: players
+            };
+            res.send(common_util.return_json_response('ok', '', ret));
+        }
+    });
+});
+
 router.get('/curr_op_cnt', user_check, (req, res) => {
     var room_id = parseInt(req.cookies.room_id);
 
