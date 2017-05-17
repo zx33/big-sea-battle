@@ -1,0 +1,21 @@
+//
+//  PrefixHeader.pch
+//  SeaBattle
+//
+//  Created by begoss on 2017/5/13.
+//  Copyright © 2017年 begoss. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+#import "CommonMacro.h"
+#import "UIColor+Extension.h"
+#import "UIView+HUD.h"
+#import "HttpTool.h"
+#import "ApiConfig.h"
+#import "MBProgressHUD.h"
+#import "Masonry.h"
+#import "MJExtension.h"
+
+#endif /* PrefixHeader_pch */

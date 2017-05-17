@@ -8,14 +8,27 @@
 
 /* Begin PBXBuildFile section */
 		2E6711B2B0E43457C24DF925 /* libPods-SeaBattle.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D66DAC57226E47EC1DB0306 /* libPods-SeaBattle.a */; };
+		9B2305751ECC3605002FCE4A /* StatusModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B2305741ECC3605002FCE4A /* StatusModel.m */; };
+		9B2305791ECC3699002FCE4A /* GameOpModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B2305781ECC3699002FCE4A /* GameOpModel.m */; };
+		9B23057C1ECC3E08002FCE4A /* PlayersModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B23057B1ECC3E08002FCE4A /* PlayersModel.m */; };
+		9B6E21F31EC99D0200B67144 /* NetGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B6E21F21EC99D0200B67144 /* NetGameViewController.m */; };
 		9BDE2D0A1EC6ECC60093B3BF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE2D091EC6ECC60093B3BF /* main.m */; };
 		9BDE2D0D1EC6ECC60093B3BF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE2D0C1EC6ECC60093B3BF /* AppDelegate.m */; };
-		9BDE2D101EC6ECC60093B3BF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE2D0F1EC6ECC60093B3BF /* ViewController.m */; };
 		9BDE2D131EC6ECC60093B3BF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9BDE2D111EC6ECC60093B3BF /* Main.storyboard */; };
 		9BDE2D151EC6ECC60093B3BF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9BDE2D141EC6ECC60093B3BF /* Assets.xcassets */; };
 		9BDE2D181EC6ECC60093B3BF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9BDE2D161EC6ECC60093B3BF /* LaunchScreen.storyboard */; };
 		9BDE2D231EC6ECC60093B3BF /* SeaBattleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE2D221EC6ECC60093B3BF /* SeaBattleTests.m */; };
 		9BDE2D2E1EC6ECC60093B3BF /* SeaBattleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE2D2D1EC6ECC60093B3BF /* SeaBattleUITests.m */; };
+		9BDE2D4B1EC6F27E0093B3BF /* UIColor+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE2D3D1EC6F27E0093B3BF /* UIColor+Extension.m */; };
+		9BDE2D4C1EC6F27E0093B3BF /* DeployShipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE2D401EC6F27E0093B3BF /* DeployShipViewController.m */; };
+		9BDE2D4D1EC6F27E0093B3BF /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE2D421EC6F27E0093B3BF /* GameViewController.m */; };
+		9BDE2D4E1EC6F27E0093B3BF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE2D441EC6F27E0093B3BF /* ViewController.m */; };
+		9BDE2D4F1EC6F27E0093B3BF /* ShipLocationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE2D471EC6F27E0093B3BF /* ShipLocationModel.m */; };
+		9BDE2D501EC6F27E0093B3BF /* BoardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE2D4A1EC6F27E0093B3BF /* BoardCell.m */; };
+		9BDE2D561EC6F6F20093B3BF /* HttpTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE2D551EC6F6F20093B3BF /* HttpTool.m */; };
+		9BDE2D591EC6F82C0093B3BF /* ApiConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE2D581EC6F82C0093B3BF /* ApiConfig.m */; };
+		9BDE2D5D1EC6FA240093B3BF /* CreateGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE2D5C1EC6FA240093B3BF /* CreateGameViewController.m */; };
+		9BDE2D601EC7F7970093B3BF /* UIView+HUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE2D5F1EC7F7970093B3BF /* UIView+HUD.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,12 +50,18 @@
 
 /* Begin PBXFileReference section */
 		56B711ED56B003DA49F26CEF /* Pods-SeaBattle.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SeaBattle.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SeaBattle/Pods-SeaBattle.debug.xcconfig"; sourceTree = "<group>"; };
+		9B2305731ECC3605002FCE4A /* StatusModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusModel.h; sourceTree = "<group>"; };
+		9B2305741ECC3605002FCE4A /* StatusModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusModel.m; sourceTree = "<group>"; };
+		9B2305771ECC3699002FCE4A /* GameOpModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOpModel.h; sourceTree = "<group>"; };
+		9B2305781ECC3699002FCE4A /* GameOpModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameOpModel.m; sourceTree = "<group>"; };
+		9B23057A1ECC3E08002FCE4A /* PlayersModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayersModel.h; sourceTree = "<group>"; };
+		9B23057B1ECC3E08002FCE4A /* PlayersModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayersModel.m; sourceTree = "<group>"; };
+		9B6E21F11EC99D0200B67144 /* NetGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetGameViewController.h; sourceTree = "<group>"; };
+		9B6E21F21EC99D0200B67144 /* NetGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetGameViewController.m; sourceTree = "<group>"; };
 		9BDE2D051EC6ECC60093B3BF /* SeaBattle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeaBattle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BDE2D091EC6ECC60093B3BF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9BDE2D0B1EC6ECC60093B3BF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9BDE2D0C1EC6ECC60093B3BF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		9BDE2D0E1EC6ECC60093B3BF /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		9BDE2D0F1EC6ECC60093B3BF /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		9BDE2D121EC6ECC60093B3BF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9BDE2D141EC6ECC60093B3BF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9BDE2D171EC6ECC60093B3BF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -53,6 +72,28 @@
 		9BDE2D291EC6ECC60093B3BF /* SeaBattleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SeaBattleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BDE2D2D1EC6ECC60093B3BF /* SeaBattleUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeaBattleUITests.m; sourceTree = "<group>"; };
 		9BDE2D2F1EC6ECC60093B3BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9BDE2D3C1EC6F27E0093B3BF /* UIColor+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Extension.h"; sourceTree = "<group>"; };
+		9BDE2D3D1EC6F27E0093B3BF /* UIColor+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Extension.m"; sourceTree = "<group>"; };
+		9BDE2D3F1EC6F27E0093B3BF /* DeployShipViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeployShipViewController.h; sourceTree = "<group>"; };
+		9BDE2D401EC6F27E0093B3BF /* DeployShipViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeployShipViewController.m; sourceTree = "<group>"; };
+		9BDE2D411EC6F27E0093B3BF /* GameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
+		9BDE2D421EC6F27E0093B3BF /* GameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
+		9BDE2D431EC6F27E0093B3BF /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		9BDE2D441EC6F27E0093B3BF /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		9BDE2D461EC6F27E0093B3BF /* ShipLocationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShipLocationModel.h; sourceTree = "<group>"; };
+		9BDE2D471EC6F27E0093B3BF /* ShipLocationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShipLocationModel.m; sourceTree = "<group>"; };
+		9BDE2D491EC6F27E0093B3BF /* BoardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoardCell.h; sourceTree = "<group>"; };
+		9BDE2D4A1EC6F27E0093B3BF /* BoardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoardCell.m; sourceTree = "<group>"; };
+		9BDE2D511EC6F2B20093B3BF /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		9BDE2D521EC6F2D10093B3BF /* CommonMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonMacro.h; sourceTree = "<group>"; };
+		9BDE2D541EC6F6F20093B3BF /* HttpTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpTool.h; sourceTree = "<group>"; };
+		9BDE2D551EC6F6F20093B3BF /* HttpTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpTool.m; sourceTree = "<group>"; };
+		9BDE2D571EC6F82C0093B3BF /* ApiConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiConfig.h; sourceTree = "<group>"; };
+		9BDE2D581EC6F82C0093B3BF /* ApiConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApiConfig.m; sourceTree = "<group>"; };
+		9BDE2D5B1EC6FA240093B3BF /* CreateGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateGameViewController.h; sourceTree = "<group>"; };
+		9BDE2D5C1EC6FA240093B3BF /* CreateGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateGameViewController.m; sourceTree = "<group>"; };
+		9BDE2D5E1EC7F7970093B3BF /* UIView+HUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+HUD.h"; sourceTree = "<group>"; };
+		9BDE2D5F1EC7F7970093B3BF /* UIView+HUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+HUD.m"; sourceTree = "<group>"; };
 		9D66DAC57226E47EC1DB0306 /* libPods-SeaBattle.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SeaBattle.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F60053B4F76FB963EE52B581 /* Pods-SeaBattle.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SeaBattle.release.xcconfig"; path = "Pods/Target Support Files/Pods-SeaBattle/Pods-SeaBattle.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -117,15 +158,20 @@
 		9BDE2D071EC6ECC60093B3BF /* SeaBattle */ = {
 			isa = PBXGroup;
 			children = (
+				9BDE2D531EC6F6F20093B3BF /* Tool */,
+				9BDE2D3B1EC6F27E0093B3BF /* Category */,
+				9BDE2D3E1EC6F27E0093B3BF /* Controller */,
+				9BDE2D451EC6F27E0093B3BF /* Model */,
+				9BDE2D481EC6F27E0093B3BF /* View */,
 				9BDE2D0B1EC6ECC60093B3BF /* AppDelegate.h */,
 				9BDE2D0C1EC6ECC60093B3BF /* AppDelegate.m */,
-				9BDE2D0E1EC6ECC60093B3BF /* ViewController.h */,
-				9BDE2D0F1EC6ECC60093B3BF /* ViewController.m */,
 				9BDE2D111EC6ECC60093B3BF /* Main.storyboard */,
 				9BDE2D141EC6ECC60093B3BF /* Assets.xcassets */,
 				9BDE2D161EC6ECC60093B3BF /* LaunchScreen.storyboard */,
 				9BDE2D191EC6ECC60093B3BF /* Info.plist */,
 				9BDE2D081EC6ECC60093B3BF /* Supporting Files */,
+				9BDE2D511EC6F2B20093B3BF /* PrefixHeader.pch */,
+				9BDE2D521EC6F2D10093B3BF /* CommonMacro.h */,
 			);
 			path = SeaBattle;
 			sourceTree = "<group>";
@@ -154,6 +200,69 @@
 				9BDE2D2F1EC6ECC60093B3BF /* Info.plist */,
 			);
 			path = SeaBattleUITests;
+			sourceTree = "<group>";
+		};
+		9BDE2D3B1EC6F27E0093B3BF /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				9BDE2D5E1EC7F7970093B3BF /* UIView+HUD.h */,
+				9BDE2D5F1EC7F7970093B3BF /* UIView+HUD.m */,
+				9BDE2D3C1EC6F27E0093B3BF /* UIColor+Extension.h */,
+				9BDE2D3D1EC6F27E0093B3BF /* UIColor+Extension.m */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		9BDE2D3E1EC6F27E0093B3BF /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				9BDE2D3F1EC6F27E0093B3BF /* DeployShipViewController.h */,
+				9BDE2D401EC6F27E0093B3BF /* DeployShipViewController.m */,
+				9BDE2D411EC6F27E0093B3BF /* GameViewController.h */,
+				9BDE2D421EC6F27E0093B3BF /* GameViewController.m */,
+				9B6E21F11EC99D0200B67144 /* NetGameViewController.h */,
+				9B6E21F21EC99D0200B67144 /* NetGameViewController.m */,
+				9BDE2D431EC6F27E0093B3BF /* ViewController.h */,
+				9BDE2D441EC6F27E0093B3BF /* ViewController.m */,
+				9BDE2D5B1EC6FA240093B3BF /* CreateGameViewController.h */,
+				9BDE2D5C1EC6FA240093B3BF /* CreateGameViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		9BDE2D451EC6F27E0093B3BF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9BDE2D461EC6F27E0093B3BF /* ShipLocationModel.h */,
+				9BDE2D471EC6F27E0093B3BF /* ShipLocationModel.m */,
+				9B2305731ECC3605002FCE4A /* StatusModel.h */,
+				9B2305741ECC3605002FCE4A /* StatusModel.m */,
+				9B2305771ECC3699002FCE4A /* GameOpModel.h */,
+				9B2305781ECC3699002FCE4A /* GameOpModel.m */,
+				9B23057A1ECC3E08002FCE4A /* PlayersModel.h */,
+				9B23057B1ECC3E08002FCE4A /* PlayersModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		9BDE2D481EC6F27E0093B3BF /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9BDE2D491EC6F27E0093B3BF /* BoardCell.h */,
+				9BDE2D4A1EC6F27E0093B3BF /* BoardCell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		9BDE2D531EC6F6F20093B3BF /* Tool */ = {
+			isa = PBXGroup;
+			children = (
+				9BDE2D541EC6F6F20093B3BF /* HttpTool.h */,
+				9BDE2D551EC6F6F20093B3BF /* HttpTool.m */,
+				9BDE2D571EC6F82C0093B3BF /* ApiConfig.h */,
+				9BDE2D581EC6F82C0093B3BF /* ApiConfig.m */,
+			);
+			path = Tool;
 			sourceTree = "<group>";
 		};
 		F2E1084AFD236F63966D969A /* Frameworks */ = {
@@ -234,6 +343,7 @@
 				TargetAttributes = {
 					9BDE2D041EC6ECC60093B3BF = {
 						CreatedOnToolsVersion = 8.3;
+						DevelopmentTeam = FY3T448KZB;
 						ProvisioningStyle = Automatic;
 					};
 					9BDE2D1D1EC6ECC60093B3BF = {
@@ -348,9 +458,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9BDE2D101EC6ECC60093B3BF /* ViewController.m in Sources */,
+				9BDE2D601EC7F7970093B3BF /* UIView+HUD.m in Sources */,
+				9B2305791ECC3699002FCE4A /* GameOpModel.m in Sources */,
+				9B2305751ECC3605002FCE4A /* StatusModel.m in Sources */,
+				9BDE2D4E1EC6F27E0093B3BF /* ViewController.m in Sources */,
+				9B6E21F31EC99D0200B67144 /* NetGameViewController.m in Sources */,
+				9BDE2D4D1EC6F27E0093B3BF /* GameViewController.m in Sources */,
+				9BDE2D591EC6F82C0093B3BF /* ApiConfig.m in Sources */,
 				9BDE2D0D1EC6ECC60093B3BF /* AppDelegate.m in Sources */,
+				9BDE2D4C1EC6F27E0093B3BF /* DeployShipViewController.m in Sources */,
+				9BDE2D4B1EC6F27E0093B3BF /* UIColor+Extension.m in Sources */,
+				9B23057C1ECC3E08002FCE4A /* PlayersModel.m in Sources */,
 				9BDE2D0A1EC6ECC60093B3BF /* main.m in Sources */,
+				9BDE2D501EC6F27E0093B3BF /* BoardCell.m in Sources */,
+				9BDE2D4F1EC6F27E0093B3BF /* ShipLocationModel.m in Sources */,
+				9BDE2D561EC6F6F20093B3BF /* HttpTool.m in Sources */,
+				9BDE2D5D1EC6FA240093B3BF /* CreateGameViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -502,6 +625,8 @@
 			baseConfigurationReference = 56B711ED56B003DA49F26CEF /* Pods-SeaBattle.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = FY3T448KZB;
+				GCC_PREFIX_HEADER = SeaBattle/PrefixHeader.pch;
 				INFOPLIST_FILE = SeaBattle/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = begoss.SeaBattle;
@@ -514,6 +639,8 @@
 			baseConfigurationReference = F60053B4F76FB963EE52B581 /* Pods-SeaBattle.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = FY3T448KZB;
+				GCC_PREFIX_HEADER = SeaBattle/PrefixHeader.pch;
 				INFOPLIST_FILE = SeaBattle/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = begoss.SeaBattle;
