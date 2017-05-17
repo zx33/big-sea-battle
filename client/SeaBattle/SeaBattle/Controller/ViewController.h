@@ -1,9 +1,9 @@
 //
 //  ViewController.h
-//  SeaBattle
+//  HaiZhan
 //
-//  Created by begoss on 2017/5/13.
-//  Copyright © 2017年 begoss. All rights reserved.
+//  Created by dotamax on 17/3/1.
+//  Copyright © 2017年 dotamax. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
