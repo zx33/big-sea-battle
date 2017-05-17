@@ -34,7 +34,7 @@
 @property (nonatomic, assign) BOOL isOurTurn;
 @property (nonatomic, copy) NSString *turns;
 
-@property (nonatomic, weak) NSTimer  *timer;
+@property (nonatomic, weak) NSTimer *timer;
 
 @end
 
