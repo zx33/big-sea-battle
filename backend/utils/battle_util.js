@@ -11,7 +11,7 @@ function get_rival(players, nickname) {
 }
 
 function map_range_check(x) {
-    return x >= 0 && x < 5;
+    return x >= 0 && x < 6;
 }
 
 function check_all_killed(map) {
@@ -88,6 +88,20 @@ my_util.set_map = (req, room_id, nickname, map_info, cb) => {
         battle.turns = 0;
     }
     return cb(null);
+}
+
+my_util.get_status = (req, room_id, cb) => {
+    var battle = req.battle_map[room_id];
+    var turns = battle.turns;
+    cb(err, turns >= 0 ? 0 : turns);
+}
+
+my_util.get_players = (req, room_id, cb) => {
+    var battle = req.battle_map[room_id];
+    if (battle.turns < -1) {
+        return cb(error_util.err_not_start);
+    }
+    return cb(null, battle.players);
 }
 
 my_util.get_current_op_count = (req, room_id, cb) => {
