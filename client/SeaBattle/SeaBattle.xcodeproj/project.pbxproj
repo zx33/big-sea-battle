@@ -56,6 +56,7 @@
 		9B2305781ECC3699002FCE4A /* GameOpModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameOpModel.m; sourceTree = "<group>"; };
 		9B23057A1ECC3E08002FCE4A /* PlayersModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayersModel.h; sourceTree = "<group>"; };
 		9B23057B1ECC3E08002FCE4A /* PlayersModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayersModel.m; sourceTree = "<group>"; };
+		9B23057D1ECD4EC2002FCE4A /* PrivaceMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrivaceMacro.h; sourceTree = "<group>"; };
 		9B6E21F11EC99D0200B67144 /* NetGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetGameViewController.h; sourceTree = "<group>"; };
 		9B6E21F21EC99D0200B67144 /* NetGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetGameViewController.m; sourceTree = "<group>"; };
 		9BDE2D051EC6ECC60093B3BF /* SeaBattle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeaBattle.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -172,6 +173,7 @@
 				9BDE2D081EC6ECC60093B3BF /* Supporting Files */,
 				9BDE2D511EC6F2B20093B3BF /* PrefixHeader.pch */,
 				9BDE2D521EC6F2D10093B3BF /* CommonMacro.h */,
+				9B23057D1ECD4EC2002FCE4A /* PrivaceMacro.h */,
 			);
 			path = SeaBattle;
 			sourceTree = "<group>";
