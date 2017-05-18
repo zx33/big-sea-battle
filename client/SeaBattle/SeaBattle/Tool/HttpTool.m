@@ -27,6 +27,7 @@
     
     if (![PASSWORD isEqualToString:@"0"]) {
         NSString *cookieStr = [NSString stringWithFormat:@"room_id=%@;nickname=%@;password=%@",ROOM_ID,NICKNAME,PASSWORD];
+        cookieStr = [cookieStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         NSLog(@"Cookies:%@",cookieStr);
         [client.requestSerializer setValue:cookieStr forHTTPHeaderField:@"Cookie"];
     }

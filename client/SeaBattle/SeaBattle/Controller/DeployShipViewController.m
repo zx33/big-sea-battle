@@ -318,11 +318,12 @@
         if ([self checkIfCanDeployShip:indexPath shipLength:2]) {
             [self deployingShip:indexPath shipLength:2];
         }
-    }else if (self.deployState == 2) {
-        if ([self checkIfCanDeployShip:indexPath shipLength:3]) {
-            [self deployingShip:indexPath shipLength:3];
-        }
     }
+//    else if (self.deployState == 2) {
+//        if ([self checkIfCanDeployShip:indexPath shipLength:3]) {
+//            [self deployingShip:indexPath shipLength:3];
+//        }
+//    }
 }
 
 #pragma mark - Setter
