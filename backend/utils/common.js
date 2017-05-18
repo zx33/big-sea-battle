@@ -1,5 +1,4 @@
 var uuid = require('node-uuid');
-var config = require('../conf/conf');
 var util = {};
 var http = require('http');
 var fs = require('fs');
