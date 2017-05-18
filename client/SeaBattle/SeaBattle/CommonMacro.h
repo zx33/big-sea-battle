@@ -35,8 +35,8 @@
 #define STATE_HAS_ENEMYSHIP 5
 
 //Network Config
-#define SB_HOST @"http://192.168.155.2"
-#define SB_PORT @"2333"
+#define SB_HOST @"http://dhz.andybear.top"
+#define SB_PORT @"80"
 
 //User Check
 #define KEY_ROOM_ID @"key_room_id"
