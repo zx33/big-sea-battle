@@ -4,7 +4,6 @@ var favicon = require('serve-favicon');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var app = express();
-var config = require('./conf/conf');
 var index = require('./routes/index');
 
 var port = 2333;
