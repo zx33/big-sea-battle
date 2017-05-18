@@ -34,10 +34,6 @@
 #define STATE_NO_SHIP 4
 #define STATE_HAS_ENEMYSHIP 5
 
-//Network Config
-#define SB_HOST @"http://dhz.andybear.top"
-#define SB_PORT @"80"
-
 //User Check
 #define KEY_ROOM_ID @"key_room_id"
 #define KEY_NICKNAME @"key_nickname"
