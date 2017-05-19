@@ -34,10 +34,6 @@
 #define STATE_NO_SHIP 4
 #define STATE_HAS_ENEMYSHIP 5
 
-//Network Config
-#define SB_HOST @"http://192.168.155.2"
-#define SB_PORT @"2333"
-
 //User Check
 #define KEY_ROOM_ID @"key_room_id"
 #define KEY_NICKNAME @"key_nickname"
