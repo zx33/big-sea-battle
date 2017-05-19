@@ -12,6 +12,8 @@ var folder = path.join(__dirname, 'battle_history');
 
 var port = 2333;
 
+var server_start_time = common_util.date_formate((new Date()), 'yyyy-MM-dd hh:mm:ss');
+
 var battle_map = {
     curr_max_room_id: 1,
 };
@@ -19,11 +21,12 @@ var battle_map = {
 var battle_status_checker = {};
 
 function save_end_battle(battle_cnt, battle) {
+    console.log('battle save', battle_cnt, server_start_time);
     if (!fs.existsSync(folder)) {
         fs.mkdirSync(folder);
     }
-    var filepath = path.join(folder, 'battle' + battle_cnt + '.log');
-    fs.writeFileSync(filepath, JSON.stringify(battle), 'utf-8');
+    var filepath = path.join(folder, server_start_time + '-battle-' + parseInt(battle_cnt) + '.log');
+    fs.writeFileSync(filepath, JSON.stringify(battle, null, 2), 'utf-8');
 }
 
 var check_battle_status = () => {
