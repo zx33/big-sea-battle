@@ -14,6 +14,7 @@
 
 ### Backend
 
+* 5.22 添加获取AMD(Artificial Mental Deficiency)指点功能，在不知道操作什么的时候，可以获得一下人工智障的指点，手动滑稽
 * 5.22 添加AMD(Artificial Mental Deficiency)工具v1.0，并测试
 * 5.19 修复保存对战记录功能bug
 * 5.18 添加battle筛选函数，对已经完成的battle生成对战日志存档，对超过10分钟未结束的比赛进行删除
