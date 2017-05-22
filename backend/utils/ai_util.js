@@ -61,7 +61,7 @@ function get_all_available_map() {
     return all_available_map;
 }
 
-function get_next_step_range(curr_map) {
+my_util.get_next_step_range = (curr_map) => {
     var map_cnt = [];
     for (var i = 0; i < 36; i++) {
         map_cnt.push(0);
@@ -87,15 +87,7 @@ function get_next_step_range(curr_map) {
         });
         all_available_map = available_map;
     });
-    console.log(all_available_map.length);
     all_available_map.forEach((m) => {
-        console.log(2333, "map info");
-        console.log('\t', m[0], m[1], m[2], m[3], m[4], m[5]);
-        console.log('\t', m[6], m[7], m[8], m[9], m[10], m[11]);
-        console.log('\t', m[12], m[13], m[14], m[15], m[16], m[17]);
-        console.log('\t', m[18], m[19], m[20], m[21], m[22], m[23]);
-        console.log('\t', m[24], m[25], m[26], m[27], m[28], m[29]);
-        console.log('\t', m[30], m[31], m[32], m[33], m[34], m[35]);
         m.forEach((x, i) => {
             map_cnt[i] += x;
         });
@@ -107,30 +99,10 @@ function get_next_step_range(curr_map) {
     var ret = [];
     map_cnt.forEach((x, i) => {
         if (x == maxcnt) {
-            ret.push(i);
+            ret.push([parseInt(i / 6), i % 6]);
         }
     });
     return ret;
 }
-
-var map = [];
-for (var i = 0; i < 36; i++) {
-    map.push(0);
-}
-
-
-map[15] = 10;
-map[20] = 10;
-map[10] = 11;
-map[9] = 11;
-map[8] = 10;
-map[11] = 11;
-map[27] = 10;
-map[13] = 10;
-map[25] = 10;
-map[17] = 10;
-map[22] = 11;
-var ret = get_next_step_range(map);
-console.log(ret);
 
 module.exports = my_util;

@@ -1,5 +1,6 @@
 var error_util = require('./error_util');
 var common_util = require('./common');
+var amd_util = require('./ai_util');
 var my_util = {};
 
 function get_rival(players, nickname) {
@@ -173,5 +174,22 @@ my_util.set_op = (req, room_id, nickname, x, y, cb) => {
     }
     return cb(null, is_end);
 }
+
+my_util.get_tips = (req, room_id, nickname, cb) => {
+    var battle = req.battle_map[room_id];
+    if (battle.status == "end") {
+        return cb(error_util.err_game_end);
+    }
+    if (battle.turns < 0) {
+        return cb(error_util.err_not_start);
+    }
+    if (nickname != battle.players[battle.turns]) {
+        return cb(error_util.err_op_turn);
+    }
+    var rival = get_rival(battle.players, nickname);
+    var rival_map = battle.maps[rival];
+    var next_step = amd_util.get_next_step_range(rival_map);
+    return cb(null, next_step);
+};
 
 module.exports = my_util;
