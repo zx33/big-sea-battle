@@ -18,5 +18,6 @@
 + (UIColor *)destroyShipCellColor;
 + (UIColor *)noShipCellColor;
 + (UIColor *)lineColor;
++ (UIColor *)tipColor;
 
 @end

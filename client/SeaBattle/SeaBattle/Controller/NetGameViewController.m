@@ -37,6 +37,7 @@
 @property (nonatomic, assign) BOOL gameEnd;
 @property (nonatomic, assign) BOOL isOurTurn;
 @property (nonatomic, copy) NSString *turns;
+@property (nonatomic, strong) NSMutableArray *tipsArray;
 
 @property (nonatomic, weak) NSTimer *timer;
 
@@ -55,6 +56,7 @@
     self.gameStart = NO;
     self.gameEnd = NO;
     self.isOurTurn = NO;
+    self.tipsArray = [NSMutableArray new];
     [self setUI];
     [self loadOurBoard];
     _timer = [NSTimer scheduledTimerWithTimeInterval:2.0f
@@ -77,7 +79,7 @@
     [self.view addSubview:self.endGameButton];
     [self.view addSubview:self.ourArmyBoard];
     [self.view addSubview:self.enemyBoard];
-    [self.view addSubview:self.tipsLabel];
+//    [self.view addSubview:self.tipsLabel];
     [self.view addSubview:self.tipsButton];
     [self.enemyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.ourArmyBoard.mas_left);
@@ -100,15 +102,15 @@
     }];
     [self.tipsButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.enemyBoard.mas_right);
-        make.top.equalTo(self.enemyBoard.mas_bottom).offset(10);
+        make.top.equalTo(self.ourArmyBoard.mas_top);
         make.height.equalTo(@40);
         make.width.equalTo(@60);
     }];
-    [self.tipsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.tipsButton.mas_bottom).offset(10);
-        make.left.equalTo(self.tipsButton.mas_left);
-        make.right.equalTo(self.tipsButton.mas_right);
-    }];
+//    [self.tipsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(self.tipsButton.mas_bottom).offset(10);
+//        make.left.equalTo(self.tipsButton.mas_left);
+//        make.right.equalTo(self.tipsButton.mas_right);
+//    }];
 }
 
 - (void)loadOurBoard {
@@ -181,7 +183,6 @@
         if ([[JSON objectForKey:@"status"] isEqualToString:@"ok"]) {
             GameOpModel *model = [GameOpModel mj_objectWithKeyValues:JSON];
             self.turns = model.result.turns;
-            self.tipsLabel.text = @"";
             if (model.result.op.nickname.length) {
                 if ([model.result.op.nickname isEqualToString:NICKNAME]) {
                     if (model.result.op.bingo) {
@@ -241,6 +242,14 @@
     if (_enemyBoardArray[x][y] == STATE_DESTROYED || _enemyBoardArray[x][y] == STATE_NO_SHIP) {
         return;
     }
+    if (self.tipsArray.count) {
+        for (int i=0; i<self.tipsArray.count; i++) {
+            NSString *x = self.tipsArray[i][0];
+            NSString *y = self.tipsArray[i][1];
+            _enemyBoardArray[[x integerValue]][[y integerValue]] = STATE_EMPTY;
+        }
+        [self.tipsArray removeAllObjects];
+    }
     [HttpTool postWithPath:[ApiConfig API_SET_OP] params:[NSDictionary dictionaryWithObjectsAndKeys:@(indexPath.section), @"x", @(indexPath.row), @"y", nil] success:^(id JSON) {
         if ([[JSON objectForKey:@"status"] isEqualToString:@"ok"]) {
             [self getCurrentOperation];
@@ -256,13 +265,13 @@
     [HttpTool getWithPath:[ApiConfig API_GET_TIPS] params:nil success:^(id JSON) {
         if ([[JSON objectForKey:@"status"] isEqualToString:@"ok"]) {
             TipsModel *model = [TipsModel mj_objectWithKeyValues:JSON];
-            NSString *tipsStr = @"";
             for (int i=0; i<model.result.tips.count; i++) {
+                [self.tipsArray addObject:model.result.tips[i]];
                 NSString *x = model.result.tips[i][0];
                 NSString *y = model.result.tips[i][1];
-                tipsStr = [tipsStr stringByAppendingString:[NSString stringWithFormat:@"(%ld,%ld)\n",[x integerValue],[y integerValue]]];
+                _enemyBoardArray[[x integerValue]][[y integerValue]] = STATE_TIPS;
             }
-            self.tipsLabel.text = tipsStr;
+            [self.enemyBoard reloadData];
         }
     } failure:^(NSError *error) {
         

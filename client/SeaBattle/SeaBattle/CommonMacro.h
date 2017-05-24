@@ -33,6 +33,7 @@
 #define STATE_DESTROYED 3
 #define STATE_NO_SHIP 4
 #define STATE_HAS_ENEMYSHIP 5
+#define STATE_TIPS 6
 
 //User Check
 #define KEY_ROOM_ID @"key_room_id"

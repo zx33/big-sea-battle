@@ -30,6 +30,8 @@
         self.backgroundColor = [UIColor noShipCellColor];
     }else if (state == STATE_HAS_ENEMYSHIP) {
         self.backgroundColor = [UIColor emptyCellColor];
+    }else if (state == STATE_TIPS) {
+        self.backgroundColor = [UIColor tipColor];
     }
 }
 

@@ -42,4 +42,8 @@
     return Color(142, 229, 238);
 }
 
++ (UIColor *)tipColor {
+    return Color(255, 204, 102);
+}
+
 @end
