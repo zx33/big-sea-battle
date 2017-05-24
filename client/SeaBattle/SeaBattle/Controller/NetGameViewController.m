@@ -12,6 +12,7 @@
 #import "GameOpModel.h"
 #import "StatusModel.h"
 #import "PlayersModel.h"
+#import "TipsModel.h"
 
 @interface NetGameViewController () <UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UIAlertViewDelegate> {
     int _enemyBoardArray[BOARD_SIZE][BOARD_SIZE];
@@ -24,6 +25,8 @@
 @property (nonatomic, strong) UICollectionView *enemyBoard;
 @property (nonatomic, strong) UICollectionView *ourArmyBoard;
 @property (nonatomic, strong) UIButton *endGameButton;
+@property (nonatomic, strong) UIButton *tipsButton;
+@property (nonatomic, strong) UILabel *tipsLabel;
 
 @property (nonatomic, assign) NSInteger gameStatus;
 @property (nonatomic, assign) NSInteger currOpCnt;
@@ -31,6 +34,7 @@
 @property (nonatomic, assign) NSInteger ourRemain;
 @property (nonatomic, assign) NSInteger enemyRemain;
 @property (nonatomic, assign) BOOL gameStart;
+@property (nonatomic, assign) BOOL gameEnd;
 @property (nonatomic, assign) BOOL isOurTurn;
 @property (nonatomic, copy) NSString *turns;
 
@@ -49,6 +53,7 @@
     self.ourRemain = SHIP_LIFE;
     self.enemyRemain = SHIP_LIFE;
     self.gameStart = NO;
+    self.gameEnd = NO;
     self.isOurTurn = NO;
     [self setUI];
     [self loadOurBoard];
@@ -72,6 +77,8 @@
     [self.view addSubview:self.endGameButton];
     [self.view addSubview:self.ourArmyBoard];
     [self.view addSubview:self.enemyBoard];
+    [self.view addSubview:self.tipsLabel];
+    [self.view addSubview:self.tipsButton];
     [self.enemyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.ourArmyBoard.mas_left);
         make.bottom.equalTo(self.enemyBoard.mas_top).offset(-8);
@@ -81,15 +88,26 @@
         make.bottom.equalTo(self.ourArmyBoard.mas_top).offset(-8);
     }];
     [self.guideLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.enemyBoard.mas_right);
-        make.bottom.equalTo(self.ourArmyLabel.mas_bottom);
-        make.left.equalTo(self.ourArmyBoard.mas_right).offset(10);
+        make.right.equalTo(self.ourArmyBoard.mas_right);
+        make.top.equalTo(self.enemyBoard.mas_bottom).offset(10);
+        make.left.equalTo(self.enemyBoard.mas_left);
     }];
     [self.endGameButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.enemyBoard.mas_right);
         make.bottom.equalTo(self.ourArmyBoard.mas_bottom);
         make.height.equalTo(@40);
         make.width.equalTo(@60);
+    }];
+    [self.tipsButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.enemyBoard.mas_right);
+        make.top.equalTo(self.enemyBoard.mas_bottom).offset(10);
+        make.height.equalTo(@40);
+        make.width.equalTo(@60);
+    }];
+    [self.tipsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.tipsButton.mas_bottom).offset(10);
+        make.left.equalTo(self.tipsButton.mas_left);
+        make.right.equalTo(self.tipsButton.mas_right);
     }];
 }
 
@@ -142,12 +160,14 @@
             if (self.opCntResult > self.currOpCnt) {
                 [self getCurrentOperation];
             }else {
-                if ([self.turns isEqualToString:NICKNAME]) {
-                    self.guideLabel.text = @"你的回合";
-                    self.isOurTurn = YES;
-                }else {
-                    self.guideLabel.text = @"敌方回合";
-                    self.isOurTurn = NO;
+                if (!self.gameEnd) {
+                    if ([self.turns isEqualToString:NICKNAME]) {
+                        self.guideLabel.text = @"你的回合";
+                        self.isOurTurn = YES;
+                    }else {
+                        self.guideLabel.text = @"敌方回合";
+                        self.isOurTurn = NO;
+                    }
                 }
             }
         }
@@ -161,6 +181,7 @@
         if ([[JSON objectForKey:@"status"] isEqualToString:@"ok"]) {
             GameOpModel *model = [GameOpModel mj_objectWithKeyValues:JSON];
             self.turns = model.result.turns;
+            self.tipsLabel.text = @"";
             if (model.result.op.nickname.length) {
                 if ([model.result.op.nickname isEqualToString:NICKNAME]) {
                     if (model.result.op.bingo) {
@@ -204,11 +225,13 @@
 
 - (void)winGame {
     self.guideLabel.text = @"你获胜了！";
+    self.gameEnd = YES;
     [_timer invalidate];
 }
 
 - (void)loseGame {
     self.guideLabel.text = @"你失败了！";
+    self.gameEnd = YES;
     [_timer invalidate];
 }
 
@@ -223,6 +246,26 @@
             [self getCurrentOperation];
         }
     } failure:^(NSError *error) {
+    }];
+}
+
+- (void)getTips {
+    if ((!self.isOurTurn)||self.gameEnd) {
+        return;
+    }
+    [HttpTool getWithPath:[ApiConfig API_GET_TIPS] params:nil success:^(id JSON) {
+        if ([[JSON objectForKey:@"status"] isEqualToString:@"ok"]) {
+            TipsModel *model = [TipsModel mj_objectWithKeyValues:JSON];
+            NSString *tipsStr = @"";
+            for (int i=0; i<model.result.tips.count; i++) {
+                NSString *x = model.result.tips[i][0];
+                NSString *y = model.result.tips[i][1];
+                tipsStr = [tipsStr stringByAppendingString:[NSString stringWithFormat:@"(%ld,%ld)\n",[x integerValue],[y integerValue]]];
+            }
+            self.tipsLabel.text = tipsStr;
+        }
+    } failure:^(NSError *error) {
+        
     }];
 }
 
@@ -242,7 +285,7 @@
     if (alertView.tag == 1001) {
         if (buttonIndex == 1) {
             [_timer invalidate];
-            [self.navigationController popViewControllerAnimated:YES];
+            [self.navigationController popToRootViewControllerAnimated:YES];
         }
     }
 }
@@ -370,8 +413,8 @@
         _guideLabel = [UILabel new];
         _guideLabel.font = BoldFont(15);
         _guideLabel.textColor = [UIColor blackColor];
-        _guideLabel.textAlignment = UITextAlignmentRight;
-        _guideLabel.numberOfLines = 3;
+        _guideLabel.textAlignment = UITextAlignmentLeft;
+        _guideLabel.numberOfLines = 2;
         _guideLabel.text = @"等待敌方玩家";
     }
     return _guideLabel;
@@ -387,6 +430,28 @@
         [_endGameButton addTarget:self action:@selector(endGame:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _endGameButton;
+}
+
+- (UIButton *)tipsButton {
+    if (!_tipsButton) {
+        _tipsButton = [UIButton new];
+        _tipsButton.backgroundColor = [UIColor buttonBgColor1];
+        _tipsButton.layer.cornerRadius = 3.0f;
+        [_tipsButton setTitle:@"提示" forState:UIControlStateNormal];
+        [_tipsButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+        [_tipsButton addTarget:self action:@selector(getTips) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _tipsButton;
+}
+
+- (UILabel *)tipsLabel {
+    if (!_tipsLabel) {
+        _tipsLabel = [UILabel new];
+        _tipsLabel.font = Font(13);
+        _tipsLabel.numberOfLines = 8;
+        _tipsLabel.textColor = [UIColor purpleColor];
+    }
+    return _tipsLabel;
 }
 
 @end

@@ -42,4 +42,8 @@
     return [NSString stringWithFormat:@"%@:%@%@", SB_HOST, SB_PORT, @"/get_players"];
 }
 
++ (NSString *)API_GET_TIPS {
+    return [NSString stringWithFormat:@"%@:%@%@", SB_HOST, SB_PORT, @"/get_tips"];
+}
+
 @end

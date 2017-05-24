@@ -18,5 +18,6 @@
 + (NSString *)API_GET_OP;
 + (NSString *)API_GET_STATUS;
 + (NSString *)API_GET_PLAYERS;
++ (NSString *)API_GET_TIPS;
 
 @end
