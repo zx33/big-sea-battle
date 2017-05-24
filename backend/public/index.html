@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Big Sea Battle</title>
+        <meta charset="utf-8">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <style>
+            button {
+                width: 20px;
+                height: 20px;
+                background: #81C7D4;
+            };
+        </style>
+    </head>
+    <body>
+        <table>
+            <tr>
+                <td>
+                    敌方海域
+                </td>
+            </tr>
+            <tr>
+                <td id="es"></td>
+            </tr>
+            <tr>
+                <td>
+                    你的海域
+                </td>
+            </tr>
+            <tr>
+                <td id="ys"></td>
+            </tr>
+        </table>
+    </body>
+    <script>
+        function _td(x) {
+            return "<td>" + x + "</td>";
+        }
+
+        function _tr(x) {
+            return "<tr>" + x + "</tr>";
+        }
+
+        function _table(x) {
+            return "<table>" + x + "</table>";
+        }
+
+        function sea_area_table() {
+            var x = "";
+            for (var i = 0; i < 6; i++) {
+                x += _td("<button class='seaElement'></button>");
+            }
+            var y = "";
+            for (var i = 0; i < 6; i++) {
+                y += _tr(x);
+            }
+            return _table(y);
+        }
+
+        $('#es').html(sea_area_table());
+        $('#ys').html(sea_area_table());
+        $(document).click((e) => {
+            if ($(e.target).hasClass('seaElement')) {
+                $(e.target).css('background', '#CB1B45');
+            }
+        })
+    </script>
+</html>
