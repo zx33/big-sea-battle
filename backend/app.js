@@ -13,15 +13,6 @@ var folder = path.join(__dirname, 'battle_history');
 var mongodb_url = '' // Insert your mongodb url here.
 var port = 2333;
 var server_start_time = common_util.date_formate((new Date()), 'yyyy-MM-dd hh:mm:ss');
-var db = (function() {
-    mongoclient.connect(mongodb_url, (err, db) => {
-        if (err) {
-            return null;
-        } else  {
-            return db;
-        }
-    });
-})();
 
 var battle_map = {
     curr_max_room_id: 1,
@@ -31,15 +22,21 @@ var battle_status_checker = {};
 
 function save_end_battle(battle_cnt, battle) {
     console.log('battle save', battle_cnt, server_start_time);
-    if (db == null) {
-        console.log('DB connect error');
-    }
-    db.collection('battle_history')
-        .insert(battle, {}, (err) => {
-            if (err) {
-                console.log((new Date()).getTime(), err);
-            }
-        });
+    mongoclient.connect(mongodb_url, (err, db) => {
+        if (err) {
+            console.log(err);
+        } else {
+            db.collection('battle_history')
+                .insert(battle, {}, (err) => {
+                    if (err) {
+                        console.log('history save error', err);
+                    } else {
+                        console.log(battle_cnt, 'battle saved');
+                    }
+                    db.close();
+                });
+        }
+    });
 }
 
 var check_battle_status = () => {
