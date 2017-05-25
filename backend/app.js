@@ -7,13 +7,21 @@ var app = express();
 var index = require('./routes/index');
 var common_util = require('./utils/common');
 var fs = require('fs');
-var my_mongodb = require('./utils/my_mongodb');
+var mongoclient = require('mongodb').MongoClient;
 
 var folder = path.join(__dirname, 'battle_history');
 var mongodb_url = '' // Insert your mongodb url here.
 var port = 2333;
 var server_start_time = common_util.date_formate((new Date()), 'yyyy-MM-dd hh:mm:ss');
-var db = my_mongodb(mongodb_url)();
+var db = (function() {
+    mongoclient.connect(url, (err, db) => {
+        if (err) {
+            return null;
+        } else  {
+            return db;
+        }
+    });
+})();
 
 var battle_map = {
     curr_max_room_id: 1,
@@ -23,6 +31,9 @@ var battle_status_checker = {};
 
 function save_end_battle(battle_cnt, battle) {
     console.log('battle save', battle_cnt, server_start_time);
+    if (db == null) {
+        console.log('DB connect error');
+    }
     db.collection('battle_history')
         .insert(battle, {}, (err) => {
             if (err) {
