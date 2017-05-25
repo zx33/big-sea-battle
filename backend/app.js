@@ -14,7 +14,7 @@ var mongodb_url = '' // Insert your mongodb url here.
 var port = 2333;
 var server_start_time = common_util.date_formate((new Date()), 'yyyy-MM-dd hh:mm:ss');
 var db = (function() {
-    mongoclient.connect(url, (err, db) => {
+    mongoclient.connect(mongodb_url, (err, db) => {
         if (err) {
             return null;
         } else  {
