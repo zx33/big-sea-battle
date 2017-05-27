@@ -36,8 +36,45 @@ router.get('/join_game', (req, res) => {
     var nickname = req.query.nickname || '$$$';
 
     battle_util.join_game(req, room_id, nickname, (err, room_pwd) => {
-        return_response(res)(err, room_pwd);
+        var ret = {
+            password: room_pwd
+        };
+        return_response(res)(err, ret);
     });
 });
+
+router.post('/set_map', user_check, (req, res) => {
+    var nickname = req.cookies.nickname;
+    var room_id = parseInt(req.cookies.room_id);
+    var map_info = req.body.map_info;
+
+    battle_util.set_map(req, room_id, nickname, map_info, (err) => {
+        return_response(res)(err);
+    });
+});
+
+router.get('/get_status', user_check, (req, res) => {
+    var room_id = parseInt(req.cookies.room_id);
+
+    battle_util.get_status(req, room_id, (err, status) => {
+        var ret = {
+            status: status
+        };
+        return_response(res)(err, ret);
+    });
+});
+
+router.get('/get_players', user_check, (req, res) => {
+    var room_id = parseInt(req.cookies.room_id);
+
+    battle_util.get_players(req, room_id, (err, players) => {
+        var ret = {
+            players: players
+        };
+        return_response(res)(err, players);
+    });
+});
+
+
 
 module.exports = router;

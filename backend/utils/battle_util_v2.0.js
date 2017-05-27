@@ -10,6 +10,11 @@ var status_map = {
     3: 'end'
 };
 
+var range_ship_map = {
+    6: 5,
+    10: 17
+};
+
 my_util.gen_new_battle = (req, game_type, sea_range) => {
     var battle_index = req.battle_map.curr_max_room_id;
     req.battle_map.curr_max_room_id += 1;
