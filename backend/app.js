@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var app = express();
 var index = require('./routes/index');
+var index_v2 = require('./routes/sea_battle');
 var common_util = require('./utils/common');
 var fs = require('fs');
 var mongoclient = require('mongodb').MongoClient;
@@ -68,6 +69,7 @@ app.use((req, res, next) => {
     next();
 });
 app.use('/', index);
+app.use('/2.0', index_v2);
 
 app.listen(port, () => {
     console.log('App is listening on ', port);
