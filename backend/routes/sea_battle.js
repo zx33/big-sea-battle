@@ -75,6 +75,69 @@ router.get('/get_players', user_check, (req, res) => {
     });
 });
 
+router.get('/curr_op_cnt', user_check, (req, res) => {
+    var room_id = parseInt(req.cookies.room_id);
 
+    battle_util.get_current_op_count(req, room_id, (err, op_cnt) => {
+        var ret = {
+            op_cnt: op_cnt
+        };
+        return_response(res)(err, op_cnt);
+    });
+});
+
+router.get('/get_op', user_check, (req, res) => {
+    var room_id = parseInt(req.cookies.room_id);
+    var op_cnt = req.query.op_cnt;
+
+    battle_util.get_op(req, room_id, op_cnt, (err, op, turns, is_end) => {
+        var ret = {
+            op: op,
+            turns: turns,
+            is_end: is_end
+        };
+        return_response(res)(err, ret);
+    });
+});
+
+router.post('/set_op', user_check, (req, res) => {
+    var room_id = parseInt(req.cookies.room_id);
+    var x = req.body.x;
+    var y = req.body.y;
+    var nickname = req.cookies.nickname;
+
+    battle_util.set_op(req, room_id, nickname, x, y, (err, is_end) => {
+        var ret = {
+            game_status: is_end
+        };
+        return_response(res)(err, ret);
+    });
+});
+
+router.get('/get_winner', user_check, (req, res) => {
+    var room_id = parseInt(req.cookies.room_id);
+
+    battle_util.get_winner(req, room_id, (err, has_winner, winner) => {
+        var ret = {
+            has_winner: has_winner,
+            winner: winner
+        };
+        return_response(res)(err, ret);
+    });
+});
+
+router.post('/guess', user_check, (req, res) => {
+    var room_id = parseInt(req.cookies.room_id);
+    var nickname = req.cookies.nickname;
+    var map_info = req.body.map_info;
+
+    battle_util.guess(req, room_id, nickname, map_info, (err, rival_map, bingo_cnt) => {
+        var ret = {
+            rival_map: rival_map,
+            bingo_cnt: bingo_cnt
+        };
+        return_response(res)(err, ret);
+    });
+});
 
 module.exports = router;
