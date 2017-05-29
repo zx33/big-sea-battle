@@ -317,4 +317,4 @@ my_util.get_winner = (req, room_id, cb) => {
     }
 }
 
-module.exports(my_util);
+module.exports = my_util;

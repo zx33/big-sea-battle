@@ -22,8 +22,8 @@ router.get('/get_battle_status', (req, res) => {
 });
 
 router.get('/new_game', (req, res) => {
-    var game_type = req.query.game_type;
-    var sea_range = req.query.sea_range;
+    var game_type = req.query.game_type || "normal";
+    var sea_range = parseInt(req.query.sea_range) || 6;
     var room_id = battle_util.gen_new_battle(req, game_type, sea_range);
     var ret = {
         room_id: room_id
