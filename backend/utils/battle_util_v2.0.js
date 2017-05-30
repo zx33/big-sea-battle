@@ -134,7 +134,7 @@ my_util.join_game = (req, room_id, nickname, cb) => {
         battle.turns = -1;
         battle.status += 1;
     }
-    return cb(null, battle.password);
+    return cb(null, battle.password, battle.sea_range, battle.game_type);
 }
 
 my_util.set_map = (req, room_id, nickname, map_info, cb) => {
@@ -211,7 +211,7 @@ my_util.set_op = (req, room_id, nickname, x, y, cb) => {
     if (nickname != battle.players[battle.turns]) {
         return cb(error_util.err_op_turn);
     }
-    
+
     var rival = get_rival(battle.players, nickname);
     var rival_map = battle.maps[rival];
     var index = x * battle.sea_range + y;

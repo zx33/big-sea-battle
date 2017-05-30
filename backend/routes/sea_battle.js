@@ -35,9 +35,11 @@ router.get('/join_game', (req, res) => {
     var room_id = parseInt(req.query.room_id) || -1;
     var nickname = req.query.nickname || '$$$';
 
-    battle_util.join_game(req, room_id, nickname, (err, room_pwd) => {
+    battle_util.join_game(req, room_id, nickname, (err, room_pwd, sea_range, game_type) => {
         var ret = {
-            password: room_pwd
+            password: room_pwd,
+            sea_range: sea_range,
+            game_type: game_type
         };
         return_response(res)(err, ret);
     });
