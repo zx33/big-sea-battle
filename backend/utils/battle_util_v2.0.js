@@ -202,7 +202,7 @@ my_util.set_op = (req, room_id, nickname, x, y, cb) => {
     x = parseInt(x);
     y = parseInt(y);
     var battle = req.battle_map[room_id];
-    if (!(map_range_check(x, battle.map_range) && map_range_check(y, battle.map_range))) {
+    if (!(map_range_check(x, battle.sea_range) && map_range_check(y, battle.sea_range))) {
         return cb(error_util.err_out_of_range);
     }
     if (battle.status < 2) {
@@ -211,9 +211,11 @@ my_util.set_op = (req, room_id, nickname, x, y, cb) => {
     if (nickname != battle.players[battle.turns]) {
         return cb(error_util.err_op_turn);
     }
+    
     var rival = get_rival(battle.players, nickname);
     var rival_map = battle.maps[rival];
-    var index = x * battle.map_range + y;
+    var index = x * battle.sea_range + y;
+
     if (rival_map[index] > 9) {
         return cb(error_util.err_repeat_op);
     }
@@ -245,7 +247,7 @@ my_util.set_op = (req, room_id, nickname, x, y, cb) => {
         battle.has_winner = player_cnt;
         battle.status += 1;
         is_end = 1;
-    } else if (battle.game_type == 'speed' && battle.ops.length == battle.map_range * battle.map_range) {
+    } else if (battle.game_type == 'speed' && battle.ops.length == battle.sea_range * battle.sea_range) {
         battle.has_winner = calc_speed_winner(battle.ops);
         battle.status += 1;
         is_end = 1;

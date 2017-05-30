@@ -82,7 +82,7 @@ router.get('/curr_op_cnt', user_check, (req, res) => {
         var ret = {
             op_cnt: op_cnt
         };
-        return_response(res)(err, op_cnt);
+        return_response(res)(err, ret);
     });
 });
 

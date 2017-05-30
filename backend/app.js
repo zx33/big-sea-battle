@@ -48,6 +48,10 @@ var check_battle_status = () => {
             battle_status_checker[i] = 1;
         } else {
             if (battle_map[i].status == 'end') {
+                battle_map[i].verson = 1.0;
+                save_end_battle(i, battle_map[i]);
+            } else if (battle_map[i].status == 3) {
+                battle_map[i].verson = 2.0;
                 save_end_battle(i, battle_map[i]);
             }
             delete battle_map[i];
