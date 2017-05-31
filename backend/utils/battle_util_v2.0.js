@@ -260,7 +260,7 @@ my_util.guess = (req, room_id, nickname, map_info, cb) => {
 
     function calc_guess_result() {
         var guess_ret = 0;
-        var rival_map = battle.map[get_rival(nickname)];
+        var rival_map = battle.maps[get_rival(battle.players, nickname)];
         var map_length = rival_map.length;
         for (var i = 0; i < map_length; i++) {
             if (map_info[i] + rival_map[i] == 2) {
@@ -285,7 +285,7 @@ my_util.guess = (req, room_id, nickname, map_info, cb) => {
     map_info = map_info.split('').map((x) => {
         return parseInt(x);
     });
-    if (!check_guess_map(map_info)) {
+    if (!check_guess_map(map_info, battle.sea_range)) {
         return cb(error_util.err_map_info);
     }
     if (!battle.guess_map) {
@@ -304,7 +304,7 @@ my_util.guess = (req, room_id, nickname, map_info, cb) => {
         battle.status += 1;
         battle.has_winner = calc_guess_winner();
     }
-    cb(null, battle.map[rival], battle.guess_ret[nickname]);
+    cb(null, battle.maps[rival], battle.guess_ret[nickname]);
 }
 
 my_util.get_winner = (req, room_id, nickname, cb) => {
