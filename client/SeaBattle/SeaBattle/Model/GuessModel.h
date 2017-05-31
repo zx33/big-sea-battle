@@ -22,7 +22,7 @@
 
 @interface GuessModelResult : NSObject
 
-@property (nonatomic, copy) NSString *rival_map;
+@property (nonatomic, strong) NSArray <NSNumber *> *rival_map;
 
 @property (nonatomic, assign) NSInteger bingo_cnt;
 

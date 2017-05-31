@@ -30,8 +30,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.gameModeArray = @[@"normal", @"speed"];
-    self.gameModeTitleArray = @[@"普通", @"竞速"];
+    self.gameModeArray = @[@"normal", @"speed", @"guess"];
+    self.gameModeTitleArray = @[@"普通", @"竞速", @"预判"];
     self.seaRangeArray = @[@"6", @"8"];
     
     [self.view addSubview:self.createGameButton];

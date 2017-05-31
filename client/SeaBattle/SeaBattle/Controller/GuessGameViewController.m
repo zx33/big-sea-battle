@@ -139,6 +139,18 @@
         [HttpTool getWithPath:[ApiConfig API_GET_WINNER] params:nil success:^(id JSON) {
             if ([[JSON objectForKey:@"status"] isEqualToString:@"ok"]) {
                 WinnerModel *model = [WinnerModel mj_objectWithKeyValues:JSON];
+                for (NSInteger i=0; i<model.result.map_info.count; i++) {
+                    NSInteger x = i/BOARD_SIZE;
+                    NSInteger y = i%BOARD_SIZE;
+                    if ([model.result.map_info[i] integerValue] == 1) {
+                        if (_ourBoardArray[x][y] == STATE_EMPTY) {
+                            _ourBoardArray[x][y] = STATE_NO_SHIP;
+                        }else if (_ourBoardArray[x][y] == STATE_DEPLOYED) {
+                            _ourBoardArray[x][y] = STATE_DESTROYED;
+                        }
+                    }
+                }
+                [self.ourArmyBoard reloadData];
                 if (!model.result.has_winner) {
                     self.guideLabel.text = @"平局！";
                 }else {
@@ -191,23 +203,24 @@
     }
 }
 
-- (void)showGuessResultWithEnemyMap:(NSString *)enemyMap bingoCount:(NSInteger)bingoCount {
-    for (NSInteger i=0; i<enemyMap.length; i++) {
-        NSInteger x = i/BOARD_SIZE;
-        NSInteger y = i%BOARD_SIZE;
-        char num = [enemyMap characterAtIndex:i];
-        if (num == '1') {
+- (void)showGuessResultWithEnemyMap:(NSArray *)enemyMap bingoCount:(NSInteger)bingoCount {
+    for (NSInteger i=0; i<enemyMap.count; i++) {
+        NSInteger x = i / BOARD_SIZE;
+        NSInteger y = i % BOARD_SIZE;
+        NSInteger num = [enemyMap[i] integerValue];
+        if (num == 1) {
             if (_enemyBoardArray[x][y] == STATE_EMPTY) {
                 _enemyBoardArray[x][y] = STATE_DEPLOYED;
             }else if (_enemyBoardArray[x][y] == STATE_DEPLOYING) {
                 _enemyBoardArray[x][y] = STATE_DESTROYED;
             }
-        }else if (num == '0') {
+        }else if (num == 0) {
             if (_enemyBoardArray[x][y] == STATE_DEPLOYING) {
                 _enemyBoardArray[x][y] = STATE_NO_SHIP;
             }
         }
     }
+    [self.enemyBoard reloadData];
     self.guideLabel.text = [NSString stringWithFormat:@"你击中了%ld格",bingoCount];
 }
 
@@ -324,7 +337,7 @@
 
 - (UICollectionView *)ourArmyBoard {
     if (!_ourArmyBoard) {
-        _ourArmyBoard = [[UICollectionView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2 - (21*BOARD_SIZE+1), SCREEN_HEIGHT - (26*BOARD_SIZE+1+15), 26*BOARD_SIZE+1, 26*BOARD_SIZE+1) collectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
+        _ourArmyBoard = [[UICollectionView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2 - (21*BOARD_SIZE+1), SCREEN_HEIGHT - (26*BOARD_SIZE+1+12), 26*BOARD_SIZE+1, 26*BOARD_SIZE+1) collectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
         _ourArmyBoard.dataSource = self;
         _ourArmyBoard.delegate = self;
         _ourArmyBoard.scrollEnabled = NO;
@@ -338,7 +351,7 @@
 
 - (UICollectionView *)enemyBoard {
     if (!_enemyBoard) {
-        _enemyBoard = [[UICollectionView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2 - (21*BOARD_SIZE+1), 38, 42*BOARD_SIZE+2, 42*BOARD_SIZE+2) collectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
+        _enemyBoard = [[UICollectionView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2 - (21*BOARD_SIZE+1), 45, 42*BOARD_SIZE+2, 42*BOARD_SIZE+2) collectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
         _enemyBoard.dataSource = self;
         _enemyBoard.delegate = self;
         _enemyBoard.scrollEnabled = NO;
