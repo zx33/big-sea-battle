@@ -307,15 +307,22 @@ my_util.guess = (req, room_id, nickname, map_info, cb) => {
     cb(null, battle.map[rival], battle.guess_ret[nickname]);
 }
 
-my_util.get_winner = (req, room_id, cb) => {
+my_util.get_winner = (req, room_id, nickname, cb) => {
     var battle = req.battle_map[room_id];
     if (battle.status != 3) {
         return cb(error_util.err_not_end);
     }
-    if (battle.has_winner >= 0) {
-        return cb(null, 1, battle.players[battle.has_winner]);
+    var map_info = null;
+    var rival = get_rival(battle.players, nickname);
+    if (battle.game_type == 'guess') {
+        map_info = battle.guess_map[rival];
     } else {
-        return cb(null, 0);
+        map_info = battle.maps[rival];
+    }
+    if (battle.has_winner >= 0) {
+        return cb(null, 1, battle.players[battle.has_winner], map_info);
+    } else {
+        return cb(null, 0, null, map_info);
     }
 }
 
