@@ -17,8 +17,8 @@
 #define GAME_STATE_LOSE 4
 
 @interface GameViewController () <UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UIAlertViewDelegate> {
-    int _enemyBoardArray[BOARD_SIZE][BOARD_SIZE];
-    int _ourBoardArray[BOARD_SIZE][BOARD_SIZE];
+    int _enemyBoardArray[8][8];
+    int _ourBoardArray[8][8];
 }
 
 @property (nonatomic, assign) NSInteger gameState;
@@ -40,8 +40,6 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.gameState = GAME_STATE_OUR_TURN;
-    self.ourRemain = SHIP_LIFE;
-    self.enemysRemain = SHIP_LIFE;
     
     [self setUI];
     [self loadPlayerBoard];

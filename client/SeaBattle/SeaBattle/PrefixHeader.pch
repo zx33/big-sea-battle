@@ -10,7 +10,7 @@
 #define PrefixHeader_pch
 
 #import "CommonMacro.h"
-#import "PrivaceMacro.h"
+#import "PrivateMacro.h"
 #import "UIColor+Extension.h"
 #import "UIView+HUD.h"
 #import "HttpTool.h"

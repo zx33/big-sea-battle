@@ -11,39 +11,47 @@
 @implementation ApiConfig
 
 + (NSString *)API_CREATE_NEW_GAME {
-    return [NSString stringWithFormat:@"%@:%@%@", SB_HOST, SB_PORT, @"/new_game"];
+    return [NSString stringWithFormat:@"%@:%@%@", SB_HOST, SB_PORT, @"/2.0/new_game"];
 }
 
 + (NSString *)API_JOIN_GAME {
-    return [NSString stringWithFormat:@"%@:%@%@", SB_HOST, SB_PORT, @"/join_game"];
+    return [NSString stringWithFormat:@"%@:%@%@", SB_HOST, SB_PORT, @"/2.0/join_game"];
 }
 
 + (NSString *)API_SET_MAP {
-    return [NSString stringWithFormat:@"%@:%@%@", SB_HOST, SB_PORT, @"/set_map"];
+    return [NSString stringWithFormat:@"%@:%@%@", SB_HOST, SB_PORT, @"/2.0/set_map"];
 }
 
 + (NSString *)API_CURR_OP_CNT {
-    return [NSString stringWithFormat:@"%@:%@%@", SB_HOST, SB_PORT, @"/curr_op_cnt"];
+    return [NSString stringWithFormat:@"%@:%@%@", SB_HOST, SB_PORT, @"/2.0/curr_op_cnt"];
 }
 
 + (NSString *)API_SET_OP {
-    return [NSString stringWithFormat:@"%@:%@%@", SB_HOST, SB_PORT, @"/set_op"];
+    return [NSString stringWithFormat:@"%@:%@%@", SB_HOST, SB_PORT, @"/2.0/set_op"];
 }
 
 + (NSString *)API_GET_OP {
-    return [NSString stringWithFormat:@"%@:%@%@", SB_HOST, SB_PORT, @"/get_op"];
+    return [NSString stringWithFormat:@"%@:%@%@", SB_HOST, SB_PORT, @"/2.0/get_op"];
 }
 
 + (NSString *)API_GET_STATUS {
-    return [NSString stringWithFormat:@"%@:%@%@", SB_HOST, SB_PORT, @"/get_status"];
+    return [NSString stringWithFormat:@"%@:%@%@", SB_HOST, SB_PORT, @"/2.0/get_status"];
 }
 
 + (NSString *)API_GET_PLAYERS {
-    return [NSString stringWithFormat:@"%@:%@%@", SB_HOST, SB_PORT, @"/get_players"];
+    return [NSString stringWithFormat:@"%@:%@%@", SB_HOST, SB_PORT, @"/2.0/get_players"];
 }
 
 + (NSString *)API_GET_TIPS {
-    return [NSString stringWithFormat:@"%@:%@%@", SB_HOST, SB_PORT, @"/get_tips"];
+    return [NSString stringWithFormat:@"%@:%@%@", SB_HOST, SB_PORT, @"/2.0/get_tips"];
+}
+
++ (NSString *)API_GET_WINNER {
+    return [NSString stringWithFormat:@"%@:%@%@", SB_HOST, SB_PORT, @"/2.0/get_winner"];
+}
+
++ (NSString *)API_GUESS {
+    return [NSString stringWithFormat:@"%@:%@%@", SB_HOST, SB_PORT, @"/2.0/guess"];
 }
 
 @end

@@ -45,8 +45,9 @@
             success:(HttpSuccessBlock)success
             failure:(HttpFailureBlock)failure {
     AFHttpClient *manager = [AFHttpClient sharedClient];
-    NSLog(@"url=%@, params=%@",  path, params);
+    NSLog(@"get_url=%@, params=%@",  path, params);
     [manager GET:path parameters:params success:^(NSURLSessionDataTask *task, id JSON) {
+        NSLog(@"get_path:%@,response:%@",path,JSON);
         if (success == nil)
             return;
         success(JSON);
@@ -65,9 +66,9 @@
              success:(HttpSuccessBlock)success
              failure:(HttpFailureBlock)failure {
     AFHttpClient *manager = [AFHttpClient sharedClient];
-    NSLog(@"%@%@",path,params);
+    NSLog(@"post_url:%@, params=%@",path,params);
     [manager POST:path parameters:params success:^(NSURLSessionDataTask *task, id JSON) {
-        
+        NSLog(@"post_path:%@,response:%@",path,JSON);
         if (success == nil) return;
         success(JSON);
         

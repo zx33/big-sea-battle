@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  CreateOrJoinViewController.h
 //  HaiZhan
 //
 //  Created by dotamax on 17/3/1.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface CreateOrJoinViewController : UIViewController
 
 
 @end

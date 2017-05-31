@@ -26,6 +26,8 @@
 
 @property (nonatomic, copy) NSString *turns;
 
+@property (nonatomic, assign) NSInteger is_end;
+
 @end
 
 @interface GameOp : NSObject

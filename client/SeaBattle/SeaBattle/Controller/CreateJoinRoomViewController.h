@@ -1,5 +1,5 @@
 //
-//  CreateGameViewController.h
+//  CreateJoinRoomViewController.h
 //  SeaBattle
 //
 //  Created by begoss on 2017/5/13.
@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CreateGameViewController : UIViewController
+@interface CreateJoinRoomViewController : UIViewController
 
 @property (nonatomic, assign) NSInteger type;
+@property (nonatomic, copy) NSString *gameMode;
+@property (nonatomic, copy) NSString *seaRange;
 
 @end

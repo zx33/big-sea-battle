@@ -12,6 +12,13 @@
 		9B2305791ECC3699002FCE4A /* GameOpModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B2305781ECC3699002FCE4A /* GameOpModel.m */; };
 		9B23057C1ECC3E08002FCE4A /* PlayersModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B23057B1ECC3E08002FCE4A /* PlayersModel.m */; };
 		9B2305861ED57CED002FCE4A /* TipsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B2305851ED57CED002FCE4A /* TipsModel.m */; };
+		9B23058C1EDBB3BD002FCE4A /* MainMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B23058B1EDBB3BD002FCE4A /* MainMenuViewController.m */; };
+		9B23058F1EDBB6F7002FCE4A /* GameSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B23058E1EDBB6F7002FCE4A /* GameSettingsViewController.m */; };
+		9B2305991EDD0714002FCE4A /* FilterPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B2305981EDD0714002FCE4A /* FilterPickerView.m */; };
+		9B23059C1EDD78CF002FCE4A /* JoinGameModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B23059B1EDD78CF002FCE4A /* JoinGameModel.m */; };
+		9B2305A01EDDA238002FCE4A /* GuessGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B23059F1EDDA238002FCE4A /* GuessGameViewController.m */; };
+		9B2305A31EDDA510002FCE4A /* WinnerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B2305A21EDDA510002FCE4A /* WinnerModel.m */; };
+		9B2305A61EDDBDE1002FCE4A /* GuessModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B2305A51EDDBDE1002FCE4A /* GuessModel.m */; };
 		9B6E21F31EC99D0200B67144 /* NetGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B6E21F21EC99D0200B67144 /* NetGameViewController.m */; };
 		9BDE2D0A1EC6ECC60093B3BF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE2D091EC6ECC60093B3BF /* main.m */; };
 		9BDE2D0D1EC6ECC60093B3BF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE2D0C1EC6ECC60093B3BF /* AppDelegate.m */; };
@@ -23,12 +30,12 @@
 		9BDE2D4B1EC6F27E0093B3BF /* UIColor+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE2D3D1EC6F27E0093B3BF /* UIColor+Extension.m */; };
 		9BDE2D4C1EC6F27E0093B3BF /* DeployShipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE2D401EC6F27E0093B3BF /* DeployShipViewController.m */; };
 		9BDE2D4D1EC6F27E0093B3BF /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE2D421EC6F27E0093B3BF /* GameViewController.m */; };
-		9BDE2D4E1EC6F27E0093B3BF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE2D441EC6F27E0093B3BF /* ViewController.m */; };
+		9BDE2D4E1EC6F27E0093B3BF /* CreateOrJoinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE2D441EC6F27E0093B3BF /* CreateOrJoinViewController.m */; };
 		9BDE2D4F1EC6F27E0093B3BF /* ShipLocationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE2D471EC6F27E0093B3BF /* ShipLocationModel.m */; };
 		9BDE2D501EC6F27E0093B3BF /* BoardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE2D4A1EC6F27E0093B3BF /* BoardCell.m */; };
 		9BDE2D561EC6F6F20093B3BF /* HttpTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE2D551EC6F6F20093B3BF /* HttpTool.m */; };
 		9BDE2D591EC6F82C0093B3BF /* ApiConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE2D581EC6F82C0093B3BF /* ApiConfig.m */; };
-		9BDE2D5D1EC6FA240093B3BF /* CreateGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE2D5C1EC6FA240093B3BF /* CreateGameViewController.m */; };
+		9BDE2D5D1EC6FA240093B3BF /* CreateJoinRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE2D5C1EC6FA240093B3BF /* CreateJoinRoomViewController.m */; };
 		9BDE2D601EC7F7970093B3BF /* UIView+HUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDE2D5F1EC7F7970093B3BF /* UIView+HUD.m */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +66,20 @@
 		9B23057B1ECC3E08002FCE4A /* PlayersModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayersModel.m; sourceTree = "<group>"; };
 		9B2305841ED57CED002FCE4A /* TipsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TipsModel.h; sourceTree = "<group>"; };
 		9B2305851ED57CED002FCE4A /* TipsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TipsModel.m; sourceTree = "<group>"; };
+		9B23058A1EDBB3BD002FCE4A /* MainMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuViewController.h; sourceTree = "<group>"; };
+		9B23058B1EDBB3BD002FCE4A /* MainMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenuViewController.m; sourceTree = "<group>"; };
+		9B23058D1EDBB6F7002FCE4A /* GameSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameSettingsViewController.h; sourceTree = "<group>"; };
+		9B23058E1EDBB6F7002FCE4A /* GameSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameSettingsViewController.m; sourceTree = "<group>"; };
+		9B2305971EDD0714002FCE4A /* FilterPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterPickerView.h; sourceTree = "<group>"; };
+		9B2305981EDD0714002FCE4A /* FilterPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterPickerView.m; sourceTree = "<group>"; };
+		9B23059A1EDD78CF002FCE4A /* JoinGameModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JoinGameModel.h; sourceTree = "<group>"; };
+		9B23059B1EDD78CF002FCE4A /* JoinGameModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JoinGameModel.m; sourceTree = "<group>"; };
+		9B23059E1EDDA238002FCE4A /* GuessGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuessGameViewController.h; sourceTree = "<group>"; };
+		9B23059F1EDDA238002FCE4A /* GuessGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuessGameViewController.m; sourceTree = "<group>"; };
+		9B2305A11EDDA510002FCE4A /* WinnerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WinnerModel.h; sourceTree = "<group>"; };
+		9B2305A21EDDA510002FCE4A /* WinnerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WinnerModel.m; sourceTree = "<group>"; };
+		9B2305A41EDDBDE1002FCE4A /* GuessModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuessModel.h; sourceTree = "<group>"; };
+		9B2305A51EDDBDE1002FCE4A /* GuessModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuessModel.m; sourceTree = "<group>"; };
 		9B6E21F11EC99D0200B67144 /* NetGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetGameViewController.h; sourceTree = "<group>"; };
 		9B6E21F21EC99D0200B67144 /* NetGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetGameViewController.m; sourceTree = "<group>"; };
 		9BDE2D051EC6ECC60093B3BF /* SeaBattle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeaBattle.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -81,8 +102,8 @@
 		9BDE2D401EC6F27E0093B3BF /* DeployShipViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeployShipViewController.m; sourceTree = "<group>"; };
 		9BDE2D411EC6F27E0093B3BF /* GameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
 		9BDE2D421EC6F27E0093B3BF /* GameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
-		9BDE2D431EC6F27E0093B3BF /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		9BDE2D441EC6F27E0093B3BF /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		9BDE2D431EC6F27E0093B3BF /* CreateOrJoinViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateOrJoinViewController.h; sourceTree = "<group>"; };
+		9BDE2D441EC6F27E0093B3BF /* CreateOrJoinViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateOrJoinViewController.m; sourceTree = "<group>"; };
 		9BDE2D461EC6F27E0093B3BF /* ShipLocationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShipLocationModel.h; sourceTree = "<group>"; };
 		9BDE2D471EC6F27E0093B3BF /* ShipLocationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShipLocationModel.m; sourceTree = "<group>"; };
 		9BDE2D491EC6F27E0093B3BF /* BoardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoardCell.h; sourceTree = "<group>"; };
@@ -93,12 +114,12 @@
 		9BDE2D551EC6F6F20093B3BF /* HttpTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpTool.m; sourceTree = "<group>"; };
 		9BDE2D571EC6F82C0093B3BF /* ApiConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiConfig.h; sourceTree = "<group>"; };
 		9BDE2D581EC6F82C0093B3BF /* ApiConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApiConfig.m; sourceTree = "<group>"; };
-		9BDE2D5B1EC6FA240093B3BF /* CreateGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateGameViewController.h; sourceTree = "<group>"; };
-		9BDE2D5C1EC6FA240093B3BF /* CreateGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateGameViewController.m; sourceTree = "<group>"; };
+		9BDE2D5B1EC6FA240093B3BF /* CreateJoinRoomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateJoinRoomViewController.h; sourceTree = "<group>"; };
+		9BDE2D5C1EC6FA240093B3BF /* CreateJoinRoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateJoinRoomViewController.m; sourceTree = "<group>"; };
 		9BDE2D5E1EC7F7970093B3BF /* UIView+HUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+HUD.h"; sourceTree = "<group>"; };
 		9BDE2D5F1EC7F7970093B3BF /* UIView+HUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+HUD.m"; sourceTree = "<group>"; };
 		9D66DAC57226E47EC1DB0306 /* libPods-SeaBattle.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SeaBattle.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F4C648D31ED317CC00FB69E4 /* PrivaceMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrivaceMacro.h; sourceTree = "<group>"; };
+		F4C648D31ED317CC00FB69E4 /* PrivateMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrivateMacro.h; sourceTree = "<group>"; };
 		F60053B4F76FB963EE52B581 /* Pods-SeaBattle.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SeaBattle.release.xcconfig"; path = "Pods/Target Support Files/Pods-SeaBattle/Pods-SeaBattle.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -175,7 +196,7 @@
 				9BDE2D191EC6ECC60093B3BF /* Info.plist */,
 				9BDE2D081EC6ECC60093B3BF /* Supporting Files */,
 				9BDE2D511EC6F2B20093B3BF /* PrefixHeader.pch */,
-				F4C648D31ED317CC00FB69E4 /* PrivaceMacro.h */,
+				F4C648D31ED317CC00FB69E4 /* PrivateMacro.h */,
 				9BDE2D521EC6F2D10093B3BF /* CommonMacro.h */,
 			);
 			path = SeaBattle;
@@ -227,10 +248,16 @@
 				9BDE2D421EC6F27E0093B3BF /* GameViewController.m */,
 				9B6E21F11EC99D0200B67144 /* NetGameViewController.h */,
 				9B6E21F21EC99D0200B67144 /* NetGameViewController.m */,
-				9BDE2D431EC6F27E0093B3BF /* ViewController.h */,
-				9BDE2D441EC6F27E0093B3BF /* ViewController.m */,
-				9BDE2D5B1EC6FA240093B3BF /* CreateGameViewController.h */,
-				9BDE2D5C1EC6FA240093B3BF /* CreateGameViewController.m */,
+				9BDE2D431EC6F27E0093B3BF /* CreateOrJoinViewController.h */,
+				9BDE2D441EC6F27E0093B3BF /* CreateOrJoinViewController.m */,
+				9BDE2D5B1EC6FA240093B3BF /* CreateJoinRoomViewController.h */,
+				9BDE2D5C1EC6FA240093B3BF /* CreateJoinRoomViewController.m */,
+				9B23058A1EDBB3BD002FCE4A /* MainMenuViewController.h */,
+				9B23058B1EDBB3BD002FCE4A /* MainMenuViewController.m */,
+				9B23058D1EDBB6F7002FCE4A /* GameSettingsViewController.h */,
+				9B23058E1EDBB6F7002FCE4A /* GameSettingsViewController.m */,
+				9B23059E1EDDA238002FCE4A /* GuessGameViewController.h */,
+				9B23059F1EDDA238002FCE4A /* GuessGameViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -248,6 +275,12 @@
 				9B23057B1ECC3E08002FCE4A /* PlayersModel.m */,
 				9B2305841ED57CED002FCE4A /* TipsModel.h */,
 				9B2305851ED57CED002FCE4A /* TipsModel.m */,
+				9B23059A1EDD78CF002FCE4A /* JoinGameModel.h */,
+				9B23059B1EDD78CF002FCE4A /* JoinGameModel.m */,
+				9B2305A11EDDA510002FCE4A /* WinnerModel.h */,
+				9B2305A21EDDA510002FCE4A /* WinnerModel.m */,
+				9B2305A41EDDBDE1002FCE4A /* GuessModel.h */,
+				9B2305A51EDDBDE1002FCE4A /* GuessModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -257,6 +290,8 @@
 			children = (
 				9BDE2D491EC6F27E0093B3BF /* BoardCell.h */,
 				9BDE2D4A1EC6F27E0093B3BF /* BoardCell.m */,
+				9B2305971EDD0714002FCE4A /* FilterPickerView.h */,
+				9B2305981EDD0714002FCE4A /* FilterPickerView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -466,22 +501,29 @@
 			buildActionMask = 2147483647;
 			files = (
 				9BDE2D601EC7F7970093B3BF /* UIView+HUD.m in Sources */,
+				9B23059C1EDD78CF002FCE4A /* JoinGameModel.m in Sources */,
 				9B2305791ECC3699002FCE4A /* GameOpModel.m in Sources */,
 				9B2305751ECC3605002FCE4A /* StatusModel.m in Sources */,
-				9BDE2D4E1EC6F27E0093B3BF /* ViewController.m in Sources */,
+				9BDE2D4E1EC6F27E0093B3BF /* CreateOrJoinViewController.m in Sources */,
+				9B23058C1EDBB3BD002FCE4A /* MainMenuViewController.m in Sources */,
 				9B6E21F31EC99D0200B67144 /* NetGameViewController.m in Sources */,
+				9B2305A61EDDBDE1002FCE4A /* GuessModel.m in Sources */,
+				9B23058F1EDBB6F7002FCE4A /* GameSettingsViewController.m in Sources */,
 				9B2305861ED57CED002FCE4A /* TipsModel.m in Sources */,
+				9B2305991EDD0714002FCE4A /* FilterPickerView.m in Sources */,
 				9BDE2D4D1EC6F27E0093B3BF /* GameViewController.m in Sources */,
 				9BDE2D591EC6F82C0093B3BF /* ApiConfig.m in Sources */,
 				9BDE2D0D1EC6ECC60093B3BF /* AppDelegate.m in Sources */,
 				9BDE2D4C1EC6F27E0093B3BF /* DeployShipViewController.m in Sources */,
+				9B2305A01EDDA238002FCE4A /* GuessGameViewController.m in Sources */,
 				9BDE2D4B1EC6F27E0093B3BF /* UIColor+Extension.m in Sources */,
 				9B23057C1ECC3E08002FCE4A /* PlayersModel.m in Sources */,
 				9BDE2D0A1EC6ECC60093B3BF /* main.m in Sources */,
 				9BDE2D501EC6F27E0093B3BF /* BoardCell.m in Sources */,
 				9BDE2D4F1EC6F27E0093B3BF /* ShipLocationModel.m in Sources */,
+				9B2305A31EDDA510002FCE4A /* WinnerModel.m in Sources */,
 				9BDE2D561EC6F6F20093B3BF /* HttpTool.m in Sources */,
-				9BDE2D5D1EC6FA240093B3BF /* CreateGameViewController.m in Sources */,
+				9BDE2D5D1EC6FA240093B3BF /* CreateJoinRoomViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

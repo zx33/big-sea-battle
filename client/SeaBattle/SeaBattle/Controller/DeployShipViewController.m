@@ -11,9 +11,10 @@
 #import "GameViewController.h"
 #import "ShipLocationModel.h"
 #import "NetGameViewController.h"
+#import "GuessGameViewController.h"
 
 @interface DeployShipViewController () <UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout> {
-    int _boardArray[BOARD_SIZE][BOARD_SIZE];
+    int _boardArray[8][8];
 }
 
 @property (nonatomic, assign) NSInteger deployState;
@@ -21,6 +22,7 @@
 @property (nonatomic, strong) NSMutableArray *shipLocationArray;
 @property (nonatomic, strong) NSIndexPath *lastDeployingIndexPath;
 @property (nonatomic, assign) NSInteger lastDeployingOrientation;
+@property (nonatomic, strong) NSArray *shipLengthArray;
 
 @property (nonatomic, strong) UIButton *backButton;
 @property (nonatomic, strong) UIButton *startBattleButton;
@@ -28,6 +30,7 @@
 @property (nonatomic, strong) UILabel *guideLabel;
 @property (nonatomic, strong) UIButton *rotateButton;
 @property (nonatomic, strong) UIButton *deployButton;
+@property (nonatomic, strong) UILabel *gameTypeLabel;
 
 @end
 
@@ -44,8 +47,14 @@
             _boardArray[i][j] = STATE_EMPTY;
         }
     }
-    
     [self initUI];
+    if (BOARD_SIZE == 6) {
+        self.shipLengthArray = @[@"3", @"2"];
+        self.guideLabel.text = @"请放置第一条船，长度3";
+    }else if (BOARD_SIZE == 8) {
+        self.shipLengthArray = @[@"4", @"3", @"3", @"2"];
+        self.guideLabel.text = @"请放置第一条船，长度4";
+    }
     
 }
 
@@ -61,6 +70,7 @@
     [self.view addSubview:self.guideLabel];
     [self.view addSubview:self.rotateButton];
     [self.view addSubview:self.deployButton];
+    [self.view addSubview:self.gameTypeLabel];
     [self.backButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@80);
         make.height.equalTo(@40);
@@ -89,6 +99,19 @@
         make.right.equalTo(self.collectionView.mas_right);
         make.top.equalTo(self.guideLabel.mas_bottom).offset(20);
     }];
+    [self.gameTypeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.collectionView.mas_left);
+        make.top.equalTo(self.rotateButton.mas_bottom).offset(20);
+    }];
+    NSString *mode;
+    if ([GAME_MODE isEqualToString:@"normal"]) {
+        mode = @"普通";
+    }else if ([GAME_MODE isEqualToString:@"speed"]) {
+        mode = @"竞速";
+    }else if ([GAME_MODE isEqualToString:@"guess"]) {
+        mode = @"预判";
+    }
+    self.gameTypeLabel.text = [NSString stringWithFormat:@"  模式：%@    范围：%ld", mode, BOARD_SIZE];
 }
 
 - (void)rotateShip:(UIButton *)button {
@@ -102,66 +125,49 @@
 }
 
 - (void)deployShip:(UIButton *)button {
-    if (self.deployState == 0) {
-        if (self.lastDeployingIndexPath) {
-            self.guideLabel.text = @"请放置第二条船，长度2";
-            if (self.lastDeployingOrientation == 0) {
-                for (int i=0; i<3; i++) {
-                    _boardArray[self.lastDeployingIndexPath.section+i][self.lastDeployingIndexPath.row] = STATE_DEPLOYED;
-                }
-            }else {
-                for (int i=0; i<3; i++) {
-                    _boardArray[self.lastDeployingIndexPath.section][self.lastDeployingIndexPath.row+i] = STATE_DEPLOYED;
-                }
-            }
-            ShipLocationModel *location = [ShipLocationModel new];
-            [location initWithIndexPath:self.lastDeployingIndexPath Length:3 orientation:self.lastDeployingOrientation];
-            [self.shipLocationArray addObject:location];
-            [self.collectionView reloadData];
-            self.deployState = 1;
-            self.lastDeployingIndexPath = nil;
-
-        }
-    }else if (self.deployState == 1) {
+    if (self.deployState == self.shipLengthArray.count - 1) {
         if (self.lastDeployingIndexPath) {
             self.guideLabel.text = @"放置完毕，可以开战";
             if (self.lastDeployingOrientation == 0) {
-                for (int i=0; i<2; i++) {
+                for (int i=0; i<[self.shipLengthArray[self.deployState] integerValue]; i++) {
                     _boardArray[self.lastDeployingIndexPath.section+i][self.lastDeployingIndexPath.row] = STATE_DEPLOYED;
                 }
             }else {
-                for (int i=0; i<2; i++) {
+                for (int i=0; i<[self.shipLengthArray[self.deployState] integerValue]; i++) {
                     _boardArray[self.lastDeployingIndexPath.section][self.lastDeployingIndexPath.row+i] = STATE_DEPLOYED;
                 }
             }
             ShipLocationModel *location = [ShipLocationModel new];
-            [location initWithIndexPath:self.lastDeployingIndexPath Length:2 orientation:self.lastDeployingOrientation];
+            [location initWithIndexPath:self.lastDeployingIndexPath Length:[self.shipLengthArray[self.deployState] integerValue] orientation:self.lastDeployingOrientation];
             [self.shipLocationArray addObject:location];
             [self.collectionView reloadData];
-            self.deployState = 2;
+            self.deployState++;
+            self.lastDeployingIndexPath = nil;
+        }
+
+    }else {
+        if (self.lastDeployingIndexPath) {
+            NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+            formatter.numberStyle = kCFNumberFormatterRoundHalfDown;
+            formatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
+            self.guideLabel.text = [NSString stringWithFormat:@"请放置第%@条船，长度%ld",[formatter stringFromNumber:[NSNumber numberWithInteger:self.deployState+2]],[self.shipLengthArray[self.deployState+1] integerValue]];
+            if (self.lastDeployingOrientation == 0) {
+                for (int i=0; i<[self.shipLengthArray[self.deployState] integerValue]; i++) {
+                    _boardArray[self.lastDeployingIndexPath.section+i][self.lastDeployingIndexPath.row] = STATE_DEPLOYED;
+                }
+            }else {
+                for (int i=0; i<[self.shipLengthArray[self.deployState] integerValue]; i++) {
+                    _boardArray[self.lastDeployingIndexPath.section][self.lastDeployingIndexPath.row+i] = STATE_DEPLOYED;
+                }
+            }
+            ShipLocationModel *location = [ShipLocationModel new];
+            [location initWithIndexPath:self.lastDeployingIndexPath Length:[self.shipLengthArray[self.deployState] integerValue] orientation:self.lastDeployingOrientation];
+            [self.shipLocationArray addObject:location];
+            [self.collectionView reloadData];
+            self.deployState++;
             self.lastDeployingIndexPath = nil;
         }
     }
-//    else if (self.deployState == 2) {
-//        if (self.lastDeployingIndexPath) {
-//            self.guideLabel.text = @"放置完毕，可以开战";
-//            if (self.lastDeployingOrientation == 0) {
-//                for (int i=0; i<3; i++) {
-//                    _boardArray[self.lastDeployingIndexPath.section+i][self.lastDeployingIndexPath.row] = STATE_DEPLOYED;
-//                }
-//            }else {
-//                for (int i=0; i<3; i++) {
-//                    _boardArray[self.lastDeployingIndexPath.section][self.lastDeployingIndexPath.row+i] = STATE_DEPLOYED;
-//                }
-//            }
-//            ShipLocationModel *location = [ShipLocationModel new];
-//            [location initWithIndexPath:self.lastDeployingIndexPath Length:3 orientation:self.lastDeployingOrientation];
-//            [self.shipLocationArray addObject:location];
-//            [self.collectionView reloadData];
-//            self.deployState = 3;
-//            self.lastDeployingIndexPath = nil;
-//        }
-//    }
 }
 
 - (void)endGame:(UIButton *)button {
@@ -169,7 +175,7 @@
 }
 
 - (void)startBattle:(UIButton *)button {
-    if (self.deployState == 2) {
+    if (self.deployState == self.shipLengthArray.count) {
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         NSString *mapInfo = @"";
         for (int i=0; i<BOARD_SIZE; i++) {
@@ -184,9 +190,15 @@
         [HttpTool postWithPath:[ApiConfig API_SET_MAP] params:[NSDictionary dictionaryWithObjectsAndKeys:mapInfo, @"map_info", nil] success:^(id JSON) {
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             if ([[JSON objectForKey:@"status"] isEqualToString:@"ok"]) {
-                NetGameViewController *gameVC = [[NetGameViewController alloc] init];
-                gameVC.playerShipLocationArray = self.shipLocationArray;
-                [self.navigationController pushViewController:gameVC animated:YES];
+                if ([GAME_MODE isEqualToString:@"guess"]) {
+                    GuessGameViewController *gameVC = [[GuessGameViewController alloc] init];
+                    gameVC.playerShipLocationArray = self.shipLocationArray;
+                    [self.navigationController pushViewController:gameVC animated:YES];
+                }else {
+                    NetGameViewController *gameVC = [[NetGameViewController alloc] init];
+                    gameVC.playerShipLocationArray = self.shipLocationArray;
+                    [self.navigationController pushViewController:gameVC animated:YES];
+                }
             }else {
                 [self.view showBadtipsAlert:[JSON objectForKey:@"msg"]];
             }
@@ -309,21 +321,10 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];
-    NSLog(@"section:%ld,row:%ld",indexPath.section,indexPath.row);
-    if (self.deployState == 0) {
-        if ([self checkIfCanDeployShip:indexPath shipLength:3]) {
-            [self deployingShip:indexPath shipLength:3];
-        }
-    }else if (self.deployState == 1) {
-        if ([self checkIfCanDeployShip:indexPath shipLength:2]) {
-            [self deployingShip:indexPath shipLength:2];
-        }
+    NSLog(@"section:%ld,row:%ld",indexPath.section,indexPath.row);    
+    if ([self checkIfCanDeployShip:indexPath shipLength:[self.shipLengthArray[self.deployState] integerValue]]) {
+        [self deployingShip:indexPath shipLength:[self.shipLengthArray[self.deployState] integerValue]];
     }
-//    else if (self.deployState == 2) {
-//        if ([self checkIfCanDeployShip:indexPath shipLength:3]) {
-//            [self deployingShip:indexPath shipLength:3];
-//        }
-//    }
 }
 
 #pragma mark - Setter
@@ -370,7 +371,6 @@
         _guideLabel = [UILabel new];
         _guideLabel.font = BoldFont(15);
         _guideLabel.textColor = [UIColor blackColor];
-        _guideLabel.text = @"请放置第一条船，长度3";
     }
     return _guideLabel;
 }
@@ -397,6 +397,15 @@
         [_deployButton addTarget:self action:@selector(deployShip:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _deployButton;
+}
+
+- (UILabel *)gameTypeLabel {
+    if (!_gameTypeLabel) {
+        _gameTypeLabel = [UILabel new];
+        _gameTypeLabel.font = BoldFont(15);
+        _gameTypeLabel.textColor = [UIColor blackColor];
+    }
+    return _gameTypeLabel;
 }
 
 @end

@@ -19,5 +19,7 @@
 + (NSString *)API_GET_STATUS;
 + (NSString *)API_GET_PLAYERS;
 + (NSString *)API_GET_TIPS;
++ (NSString *)API_GET_WINNER;
++ (NSString *)API_GUESS;
 
 @end

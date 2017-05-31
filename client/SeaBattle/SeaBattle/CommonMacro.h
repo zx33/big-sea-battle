@@ -22,9 +22,14 @@
 #define MediumFont(S)   ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.2)?[UIFont systemFontOfSize:S weight:UIFontWeightMedium]:[UIFont boldSystemFontOfSize:S]
 #define BoldFont(S)     [UIFont boldSystemFontOfSize:S]
 
+//Weak Self
+#define WS(weakSelf)     __weak typeof(self) weakSelf = self
+
 //Game Config
-#define BOARD_SIZE 6
-#define SHIP_LIFE 5
+#define KEY_BOARD_SIZE @"key_board_size"
+#define KEY_GAME_MODE @"key_game_mode"
+#define BOARD_SIZE [[NSUserDefaults standardUserDefaults] integerForKey:KEY_BOARD_SIZE]
+#define GAME_MODE [[NSUserDefaults standardUserDefaults] objectForKey:KEY_GAME_MODE]
 
 //Cell State
 #define STATE_EMPTY 0

@@ -1,21 +1,21 @@
 //
-//  NetGameViewController.m
+//  GuessGameViewController.m
 //  SeaBattle
 //
-//  Created by begoss on 2017/5/15.
+//  Created by begoss on 2017/5/30.
 //  Copyright © 2017年 begoss. All rights reserved.
 //
 
-#import "NetGameViewController.h"
+#import "GuessGameViewController.h"
 #import "BoardCell.h"
 #import "ShipLocationModel.h"
 #import "GameOpModel.h"
 #import "StatusModel.h"
 #import "PlayersModel.h"
-#import "TipsModel.h"
+#import "GuessModel.h"
 #import "WinnerModel.h"
 
-@interface NetGameViewController () <UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UIAlertViewDelegate> {
+@interface GuessGameViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UIAlertViewDelegate> {
     int _enemyBoardArray[8][8];
     int _ourBoardArray[8][8];
 }
@@ -26,33 +26,30 @@
 @property (nonatomic, strong) UICollectionView *enemyBoard;
 @property (nonatomic, strong) UICollectionView *ourArmyBoard;
 @property (nonatomic, strong) UIButton *endGameButton;
-@property (nonatomic, strong) UIButton *tipsButton;
+@property (nonatomic, strong) UIButton *guessButton;
 
 @property (nonatomic, assign) NSInteger gameStatus;
-@property (nonatomic, assign) NSInteger currOpCnt;
-@property (nonatomic, assign) NSInteger opCntResult;
 @property (nonatomic, assign) BOOL gameStart;
-@property (nonatomic, assign) BOOL gameEnd;
-@property (nonatomic, assign) BOOL isOurTurn;
-@property (nonatomic, copy) NSString *turns;
-@property (nonatomic, strong) NSMutableArray *tipsArray;
+@property (nonatomic, assign) BOOL hasSubmitted;
+@property (nonatomic, assign) NSInteger guessRemain;
 
 @property (nonatomic, weak) NSTimer *timer;
 
 @end
 
-@implementation NetGameViewController
+@implementation GuessGameViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.gameStatus = 0;
-    self.currOpCnt = -1;
-    self.opCntResult = -1;
     self.gameStart = NO;
-    self.gameEnd = NO;
-    self.isOurTurn = NO;
-    self.tipsArray = [NSMutableArray new];
+    self.hasSubmitted = NO;
+    if (BOARD_SIZE == 6) {
+        self.guessRemain = 10;
+    }else if (BOARD_SIZE == 8) {
+        self.guessRemain = 20;
+    }
     [self setUI];
     [self loadOurBoard];
     _timer = [NSTimer scheduledTimerWithTimeInterval:2.0f
@@ -75,7 +72,7 @@
     [self.view addSubview:self.endGameButton];
     [self.view addSubview:self.ourArmyBoard];
     [self.view addSubview:self.enemyBoard];
-    [self.view addSubview:self.tipsButton];
+    [self.view addSubview:self.guessButton];
     [self.enemyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.ourArmyBoard.mas_left);
         make.bottom.equalTo(self.enemyBoard.mas_top).offset(-6);
@@ -95,7 +92,7 @@
         make.height.equalTo(@40);
         make.width.equalTo(@60);
     }];
-    [self.tipsButton mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.guessButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.enemyBoard.mas_right);
         make.top.equalTo(self.ourArmyBoard.mas_top);
         make.height.equalTo(@40);
@@ -114,18 +111,18 @@
 
 - (void)gameLoop {
     NSLog(@"循环。。。");
+    [HttpTool getWithPath:[ApiConfig API_GET_STATUS] params:nil success:^(id JSON) {
+        if ([[JSON objectForKey:@"status"] isEqualToString:@"ok"]) {
+            StatusModel *model = [StatusModel mj_objectWithKeyValues:JSON];
+            self.gameStatus = model.result.status;
+        }
+    } failure:^(NSError *error) {}];
     if (self.gameStatus < 2) {
         self.guideLabel.text = @"等待对面玩家";
-        [HttpTool getWithPath:[ApiConfig API_GET_STATUS] params:nil success:^(id JSON) {
-            if ([[JSON objectForKey:@"status"] isEqualToString:@"ok"]) {
-                StatusModel *model = [StatusModel mj_objectWithKeyValues:JSON];
-                self.gameStatus = model.result.status;
-            }
-        } failure:^(NSError *error) {}];
     }else if (self.gameStatus == 2) {
         if (!self.gameStart) {
             self.gameStart = YES;
-            self.guideLabel.text = @"敌方就绪，可以开始！";
+            self.guideLabel.text = [NSString stringWithFormat:@"敌方就绪，可以开始预判!还需选%ld格",self.guessRemain];
             [HttpTool getWithPath:[ApiConfig API_GET_PLAYERS] params:nil success:^(id JSON) {
                 if ([[JSON objectForKey:@"status"] isEqualToString:@"ok"]) {
                     PlayersModel *model = [PlayersModel mj_objectWithKeyValues:JSON];
@@ -137,21 +134,11 @@
                 }
             } failure:^(NSError *error) {
             }];
-        }else {
-            [self getCurrentOperationCount];
         }
     }else {
         [HttpTool getWithPath:[ApiConfig API_GET_WINNER] params:nil success:^(id JSON) {
             if ([[JSON objectForKey:@"status"] isEqualToString:@"ok"]) {
                 WinnerModel *model = [WinnerModel mj_objectWithKeyValues:JSON];
-                for (NSInteger i=0; i<model.result.map_info.count; i++) {
-                    NSInteger x = i/BOARD_SIZE;
-                    NSInteger y = i%BOARD_SIZE;
-                    if ([model.result.map_info[i] integerValue] == 1) {
-                        _enemyBoardArray[x][y] = STATE_DEPLOYED;
-                    }
-                    [self.enemyBoard reloadData];
-                }
                 if (!model.result.has_winner) {
                     self.guideLabel.text = @"平局！";
                 }else {
@@ -161,7 +148,6 @@
                         self.guideLabel.text = @"你失败了！";
                     }
                 }
-                self.gameEnd = YES;
                 [_timer invalidate];
             }
         } failure:^(NSError *error) {
@@ -170,95 +156,79 @@
     }
 }
 
-- (void)getCurrentOperationCount {
-    [HttpTool getWithPath:[ApiConfig API_CURR_OP_CNT] params:nil success:^(id JSON) {
-        if ([[JSON objectForKey:@"status"] isEqualToString:@"ok"]) {
-            NSDictionary *data = [JSON objectForKey:@"result"];
-            NSNumber *opCnt = [data objectForKey:@"op_cnt"];
-            self.opCntResult = [opCnt integerValue];
-            if (self.opCntResult > self.currOpCnt) {
-                [self getCurrentOperation];
+- (void)submitGuess {
+    if (self.guessRemain) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"还未预判完成"
+                                                        message:@""
+                                                       delegate:self
+                                              cancelButtonTitle:@"确定"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }else {
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        NSString *mapInfo = @"";
+        for (int i=0; i<BOARD_SIZE; i++) {
+            for (int j=0; j<BOARD_SIZE; j++) {
+                if (_enemyBoardArray[i][j] == STATE_EMPTY) {
+                    mapInfo = [mapInfo stringByAppendingString:@"0"];
+                }else if (_enemyBoardArray[i][j] == STATE_DEPLOYING) {
+                    mapInfo = [mapInfo stringByAppendingString:@"1"];
+                }
+            }
+        }
+        [HttpTool postWithPath:[ApiConfig API_GUESS] params:[NSDictionary dictionaryWithObjectsAndKeys:mapInfo, @"map_info", nil] success:^(id JSON) {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            if ([[JSON objectForKey:@"status"] isEqualToString:@"ok"]) {
+                GuessModel *model = [GuessModel mj_objectWithKeyValues:JSON];
+                [self showGuessResultWithEnemyMap:model.result.rival_map bingoCount:model.result.bingo_cnt];
             }else {
-                if (!self.gameEnd) {
-                    if ([self.turns isEqualToString:NICKNAME]) {
-                        self.guideLabel.text = @"你的回合";
-                        self.isOurTurn = YES;
-                    }else {
-                        self.guideLabel.text = @"敌方回合";
-                        self.isOurTurn = NO;
-                    }
-                }
+                [self.view showBadtipsAlert:[JSON objectForKey:@"msg"]];
             }
-        }
-    } failure:^(NSError *error) {
-        
-    }];
-}
-
-- (void)getCurrentOperation {
-    [HttpTool getWithPath:[ApiConfig API_GET_OP] params:[NSDictionary dictionaryWithObjectsAndKeys:@(++self.currOpCnt), @"op_cnt", nil] success:^(id JSON) {
-        if ([[JSON objectForKey:@"status"] isEqualToString:@"ok"]) {
-            if (self.gameEnd) {
-                return;
-            }
-            GameOpModel *model = [GameOpModel mj_objectWithKeyValues:JSON];
-            self.turns = model.result.turns;
-            if (model.result.op.nickname.length) {
-                if ([model.result.op.nickname isEqualToString:NICKNAME]) {
-                    if (model.result.op.bingo) {
-                        self.guideLabel.text = @"你击中了敌方！";
-                        _enemyBoardArray[model.result.op.x][model.result.op.y] = STATE_DESTROYED;
-                        [self.enemyBoard reloadData];
-                    }else {
-                        self.guideLabel.text = @"你没打中敌方。";
-                        _enemyBoardArray[model.result.op.x][model.result.op.y] = STATE_NO_SHIP;
-                        [self.enemyBoard reloadData];
-                    }
-                }else {
-                    if (model.result.op.bingo) {
-                        self.guideLabel.text = @"敌人击中了你！";
-                        _ourBoardArray[model.result.op.x][model.result.op.y] = STATE_DESTROYED;
-                        [self.ourArmyBoard reloadData];
-                    }else {
-                        self.guideLabel.text = @"敌人没打中你。";
-                        _ourBoardArray[model.result.op.x][model.result.op.y] = STATE_NO_SHIP;
-                        [self.ourArmyBoard reloadData];
-                    }
-                }
-            }
-            if (model.result.is_end) {
-                self.gameStatus = 3;
-            }
-        }
-    } failure:^(NSError *error) {
-        
-    }];
-}
-
-- (void)ourTurnToAttack:(NSIndexPath *)indexPath {
-    NSInteger x = indexPath.section;
-    NSInteger y = indexPath.row;
-    if (_enemyBoardArray[x][y] == STATE_DESTROYED || _enemyBoardArray[x][y] == STATE_NO_SHIP) {
-        return;
+        } failure:^(NSError *error) {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [self.view showBadtipsAlert:@"请求超时"];
+        }];
     }
-    if (self.tipsArray.count) {
-        for (int i=0; i<self.tipsArray.count; i++) {
-            NSString *x = self.tipsArray[i][0];
-            NSString *y = self.tipsArray[i][1];
-            _enemyBoardArray[[x integerValue]][[y integerValue]] = STATE_EMPTY;
-        }
-        [self.tipsArray removeAllObjects];
-    }
-    [HttpTool postWithPath:[ApiConfig API_SET_OP] params:[NSDictionary dictionaryWithObjectsAndKeys:@(indexPath.section), @"x", @(indexPath.row), @"y", nil] success:^(id JSON) {
-        if ([[JSON objectForKey:@"status"] isEqualToString:@"ok"]) {
-            [self getCurrentOperation];
-        }
-    } failure:^(NSError *error) {
-    }];
 }
 
-- (void)guessAction {
-    
+- (void)showGuessResultWithEnemyMap:(NSString *)enemyMap bingoCount:(NSInteger)bingoCount {
+    for (NSInteger i=0; i<enemyMap.length; i++) {
+        NSInteger x = i/BOARD_SIZE;
+        NSInteger y = i%BOARD_SIZE;
+        char num = [enemyMap characterAtIndex:i];
+        if (num == '1') {
+            if (_enemyBoardArray[x][y] == STATE_EMPTY) {
+                _enemyBoardArray[x][y] = STATE_DEPLOYED;
+            }else if (_enemyBoardArray[x][y] == STATE_DEPLOYING) {
+                _enemyBoardArray[x][y] = STATE_DESTROYED;
+            }
+        }else if (num == '0') {
+            if (_enemyBoardArray[x][y] == STATE_DEPLOYING) {
+                _enemyBoardArray[x][y] = STATE_NO_SHIP;
+            }
+        }
+    }
+    self.guideLabel.text = [NSString stringWithFormat:@"你击中了%ld格",bingoCount];
+}
+
+- (void)guessAction:(NSIndexPath *)indexPath {
+    if (_enemyBoardArray[indexPath.section][indexPath.row] == STATE_EMPTY) {
+        if (self.guessRemain) {
+            _enemyBoardArray[indexPath.section][indexPath.row] = STATE_DEPLOYING;
+            [self.enemyBoard reloadData];
+            self.guessRemain--;
+            if (self.guessRemain) {
+                self.guideLabel.text = [NSString stringWithFormat:@"还需选%ld格",self.guessRemain];
+            }else {
+                self.guideLabel.text = @"可以提交";
+            }
+        }
+    }else if (_enemyBoardArray[indexPath.section][indexPath.row] == STATE_DEPLOYING) {
+        _enemyBoardArray[indexPath.section][indexPath.row] = STATE_EMPTY;
+        [self.enemyBoard reloadData];
+        self.guessRemain++;
+        self.guideLabel.text = [NSString stringWithFormat:@"还需选%ld格",self.guessRemain];
+    }
 }
 
 - (void)endGame:(UIButton *)button {
@@ -344,8 +314,8 @@
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];
     NSLog(@"section:%ld,row:%ld",indexPath.section,indexPath.row);
     if (collectionView.tag == 102) {
-        if (self.isOurTurn) {
-            [self ourTurnToAttack:indexPath];
+        if (self.gameStatus == 2 && !self.hasSubmitted) {
+            [self guessAction:indexPath];
         }
     }
 }
@@ -424,16 +394,16 @@
     return _endGameButton;
 }
 
-- (UIButton *)tipsButton {
-    if (!_tipsButton) {
-        _tipsButton = [UIButton new];
-        _tipsButton.backgroundColor = [UIColor buttonBgColor1];
-        _tipsButton.layer.cornerRadius = 3.0f;
-        [_tipsButton setTitle:@"提示" forState:UIControlStateNormal];
-        [_tipsButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-        [_tipsButton addTarget:self action:@selector(guessAction) forControlEvents:UIControlEventTouchUpInside];
+- (UIButton *)guessButton {
+    if (!_guessButton) {
+        _guessButton = [UIButton new];
+        _guessButton.backgroundColor = [UIColor buttonBgColor1];
+        _guessButton.layer.cornerRadius = 3.0f;
+        [_guessButton setTitle:@"提交" forState:UIControlStateNormal];
+        [_guessButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+        [_guessButton addTarget:self action:@selector(submitGuess) forControlEvents:UIControlEventTouchUpInside];
     }
-    return _tipsButton;
+    return _guessButton;
 }
 
 @end
