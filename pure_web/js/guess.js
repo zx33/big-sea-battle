@@ -337,9 +337,8 @@ $(document).ready(function() {
       '.guess-mode-info { margin: 15px 0; text-align: center; }\n' +
       '.guess-mode-info p { font-size: 1.1rem; margin-bottom: 10px; }\n' +
       '.guess-result-container { text-align: center; padding: 20px; }\n' +
-      '.guess-comparison { display: flex; justify-content: center; gap: 30px; margin: 20px 0; }\n' +
-      '.guess-combined, .guess-ai { flex: 1; max-width: 400px; }\n' +
-      '.guess-player, .guess-rival { flex: 1; max-width: 300px; }\n' +
+      '.guess-comparison { display: flex; justify-content: center; gap: 30px; margin: 20px 0; flex-wrap: wrap; }\n' +
+      '.guess-combined, .guess-ai { flex: 1; min-width: 300px; max-width: 400px; }\n' +
       '.guess-stats { margin: 20px auto; max-width: 500px; }\n' +
       '.stat-box { background-color: #f5f5f5; border-radius: 8px; padding: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }\n' +
       '.stats-table { width: 100%; border-collapse: collapse; margin-top: 10px; }\n' +
