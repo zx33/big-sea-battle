@@ -161,11 +161,172 @@ function waitForOpponentGuess() {
                 if (Game.gameStatus === 3) {
                     // 游戏结束
                     clearInterval(statusCheckInterval);
-                    getGameResult();
+                    getGuessGameResult();
                 }
             }
         });
-    }, 2000);
+    }, 100);
+}
+
+// 获取预判模式游戏结果
+function getGuessGameResult() {
+    $.get(`${Game.apiBaseUrl}/get_winner`, function(response) {
+        if (response.status === 'ok') {
+            const hasWinner = response.result.has_winner;
+            const winner = response.result.winner;
+            const rivalMap = response.result.map_info;
+            
+            // 计算玩家命中次数
+            let playerHitCount = 0;
+            for (let i = 0; i < GuessMode.guessMap.length; i++) {
+                if (GuessMode.guessMap[i] === 1 && rivalMap[i] === 1) {
+                    playerHitCount++;
+                }
+            }
+            
+            // 计算预判准确率
+            const accuracy = Math.round((playerHitCount / GuessMode.maxGuessCount) * 100);
+            
+            // 获取对手的命中次数
+            let rivalHitCount = response.result.rival_hit_count || 0;
+            const rivalAccuracy = Math.round((rivalHitCount / GuessMode.maxGuessCount) * 100);
+            
+            let resultMessage = '';
+            if (hasWinner) {
+                if (winner === Game.nickname) {
+                    resultMessage = `恭喜你获胜了！你命中 ${playerHitCount} 次，对手命中 ${rivalHitCount} 次`;
+                } else {
+                    resultMessage = `你输了，${winner} 获胜。你命中 ${playerHitCount} 次，对手命中 ${rivalHitCount} 次`;
+                }
+            } else {
+                resultMessage = `游戏平局。你命中 ${playerHitCount} 次，对手命中 ${rivalHitCount} 次`;
+            }
+            
+            // 记录游戏结果统计
+            if (typeof StatisticsManager !== 'undefined') {
+                StatisticsManager.recordGameEnd(
+                    winner === Game.nickname,
+                    Game.gameType,
+                    Game.seaRange,
+                    Game.turns
+                );
+            }
+            
+            // 创建结果界面内容
+            const resultContent = $(`
+                <div class="guess-result-container">
+                    <h2>${resultMessage}</h2>
+                    
+                    <div class="guess-stats">
+                        <div class="stat-box">
+                            <h3>战术结果统计</h3>
+                            <table class="stats-table">
+                                <tr>
+                                    <th>玩家</th>
+                                    <th>命中次数</th>
+                                    <th>准确率</th>
+                                </tr>
+                                <tr>
+                                    <td>你</td>
+                                    <td>${playerHitCount}</td>
+                                    <td>${accuracy}%</td>
+                                </tr>
+                                <tr>
+                                    <td>对手</td>
+                                    <td>${rivalHitCount}</td>
+                                    <td>${rivalAccuracy}%</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="guess-comparison">
+                        <div class="guess-combined">
+                            <h3>预判结果与对手舰队</h3>
+                            <div id="combined-board" class="board size-${Game.seaRange}"></div>
+                        </div>
+                        <div class="guess-ai" id="ai-guess-container">
+                            <h3>对手的预判</h3>
+                            <div id="ai-guess-board" class="board size-${Game.seaRange}"></div>
+                        </div>
+                    </div>
+                </div>
+            `);
+            
+            // 添加到结果界面
+            $('#game-result').html(resultContent);
+            
+            // 显示合并的预判结果和对手舰队
+            for (let i = 0; i < rivalMap.length; i++) {
+                const x = Math.floor(i / Game.seaRange);
+                const y = i % Game.seaRange;
+                const cell = $('<div class="cell"></div>');
+                
+                // 如果是对手的舰船，添加蓝色背景
+                if (rivalMap[i] === 1) {
+                    cell.addClass('ship');
+                }
+                
+                // 如果是玩家预判的格子
+                if (GuessMode.guessMap[i] === 1) {
+                    if (rivalMap[i] === 1) {
+                        // 预判正确，添加红色标记
+                        cell.addClass('hit');
+                    } else {
+                        // 预判错误，添加灰色标记
+                        cell.addClass('miss');
+                    }
+                }
+                
+                $('#combined-board').append(cell);
+            }
+            
+            // 获取并显示AI的预判
+            const playerMap = response.result.player_map; // 玩家的实际舰队地图
+            const aiGuessMap = response.result.ai_guess_map; // AI的预判地图
+            
+            // 显示AI的预判
+            if (aiGuessMap && playerMap) {
+                for (let i = 0; i < aiGuessMap.length; i++) {
+                    const x = Math.floor(i / Game.seaRange);
+                    const y = i % Game.seaRange;
+                    const cell = $('<div class="cell"></div>');
+                    
+                    // 如果是玩家的舰船，添加蓝色背景
+                    if (playerMap[i] === 1) {
+                        cell.addClass('ship');
+                    }
+                    
+                    // 如果是AI预判的格子
+                    if (aiGuessMap[i] === 1) {
+                        if (playerMap[i] === 1) {
+                            // 预判正确，添加红色标记
+                            cell.addClass('hit');
+                        } else {
+                            // 预判错误，添加灰色标记
+                            cell.addClass('miss');
+                        }
+                    }
+                    
+                    $('#ai-guess-board').append(cell);
+                }
+            } else {
+                // 如果没有AI预判数据，隐藏AI预判区域
+                $('#ai-guess-container').hide();
+            }
+            
+            // 添加返回主页按钮
+            const backButton = $('<button class="btn primary">返回主页</button>');
+            backButton.click(function() {
+                backToHome();
+            });
+            
+            $('#game-result').append(backButton);
+            
+            // 显示结果界面
+            showResultScreen();
+        }
+    });
 }
 
 // 在游戏开始时检查是否为预判模式
@@ -175,6 +336,15 @@ $(document).ready(function() {
       '.guess { background-color: #FFD700; }\n' +
       '.guess-mode-info { margin: 15px 0; text-align: center; }\n' +
       '.guess-mode-info p { font-size: 1.1rem; margin-bottom: 10px; }\n' +
+      '.guess-result-container { text-align: center; padding: 20px; }\n' +
+      '.guess-comparison { display: flex; justify-content: center; gap: 30px; margin: 20px 0; }\n' +
+      '.guess-combined, .guess-ai { flex: 1; max-width: 400px; }\n' +
+      '.guess-player, .guess-rival { flex: 1; max-width: 300px; }\n' +
+      '.guess-stats { margin: 20px auto; max-width: 500px; }\n' +
+      '.stat-box { background-color: #f5f5f5; border-radius: 8px; padding: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }\n' +
+      '.stats-table { width: 100%; border-collapse: collapse; margin-top: 10px; }\n' +
+      '.stats-table th, .stats-table td { padding: 8px 12px; text-align: center; border-bottom: 1px solid #ddd; }\n' +
+      '.stats-table th { background-color: #e0e0e0; font-weight: bold; }\n' +
       '</style>').appendTo('head');
     
     // 监听游戏类型变化

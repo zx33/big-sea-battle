@@ -191,6 +191,17 @@ select, input {
     background-color: #888888;
 }
 
+/* 预判模式特殊样式 */
+.cell.ship.hit {
+    background-color: #CB1B45; /* 红色优先显示 */
+    border: 2px solid #4682B4; /* 蓝色边框表示是舰船 */
+}
+
+.cell.ship.miss {
+    background-color: #888888; /* 灰色表示预判 */
+    border: 2px solid #4682B4; /* 蓝色边框表示是舰船 */
+}
+
 /* 战斗区域 */
 .boards-container {
     display: flex;

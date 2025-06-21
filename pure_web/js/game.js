@@ -237,7 +237,7 @@ function updateGameUI() {
         showResultScreen();
     } else {
         // 等待玩家
-        setTimeout(getGameStatus, 2000); // 每2秒检查一次游戏状态
+        setTimeout(getGameStatus, 100); // 每100ms检查一次游戏状态
     }
 }
 
