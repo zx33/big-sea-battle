@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大海战 - 网页版</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>大海战</h1>
+            <p>一个仿照经典推理游戏——炸飞机的简化版推理游戏</p>
+        </header>
+
+        <div id="game-setup" class="section">
+            <h2>游戏设置</h2>
+            <div class="setup-options">
+                <div class="option">
+                    <label for="game-type">游戏模式：</label>
+                    <select id="game-type">
+                        <option value="normal">普通模式</option>
+                        <option value="speed">竞速模式</option>
+                        <option value="guess">预判模式</option>
+                    </select>
+                </div>
+                <div class="option">
+                    <label for="sea-range">海域大小：</label>
+                    <select id="sea-range">
+                        <option value="6">6x6</option>
+                        <option value="8">8x8</option>
+                    </select>
+                </div>
+                <div class="option">
+                    <label for="nickname">昵称：</label>
+                    <input type="text" id="nickname" placeholder="输入你的昵称">
+                </div>
+            </div>
+            <div class="buttons">
+                <button id="create-game" class="btn primary">创建游戏</button>
+                <div class="join-game">
+                    <input type="text" id="room-id" placeholder="输入房间ID">
+                    <button id="join-game" class="btn secondary">加入游戏</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="game-info" class="section hidden">
+            <div class="room-info">
+                <p>房间ID: <span id="display-room-id"></span></p>
+                <p>游戏模式: <span id="display-game-type"></span></p>
+                <p>海域大小: <span id="display-sea-range"></span></p>
+                <p>游戏状态: <span id="display-game-status"></span></p>
+            </div>
+            <div class="player-info">
+                <p>玩家: <span id="display-players"></span></p>
+                <p>当前回合: <span id="display-turn"></span></p>
+            </div>
+        </div>
+
+        <div id="game-deployment" class="section hidden">
+            <h2>部署你的舰队</h2>
+            <p class="instruction">点击海域格子放置你的舰船。<span id="deployment-ships-info"></span></p>
+            <div id="deployment-board" class="board"></div>
+            <div class="buttons">
+                <button id="rotate-ship" class="btn secondary">旋转舰船</button>
+                <button id="reset-deployment" class="btn secondary">重置部署</button>
+                <button id="confirm-deployment" class="btn primary">确认部署</button>
+            </div>
+        </div>
+
+        <div id="game-battle" class="section hidden">
+            <div class="boards-container">
+                <div class="board-wrapper">
+                    <h3>敌方海域</h3>
+                    <div id="enemy-board" class="board"></div>
+                </div>
+                <div class="board-wrapper" id="player-board-wrapper">
+                    <h3>我方海域</h3>
+                    <div id="player-board" class="board"></div>
+                </div>
+            </div>
+            <div class="game-status">
+                <p id="battle-message">等待游戏开始...</p>
+                <button id="get-hint" class="btn secondary">获取提示</button>
+                <button id="end-game" class="btn danger">结束游戏</button>
+            </div>
+        </div>
+
+        <div id="game-result" class="section hidden">
+            <h2>游戏结束</h2>
+            <p id="result-message"></p>
+            <button id="back-to-home" class="btn primary">返回主页</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="js/error-handler.js"></script>
+    <script src="js/loading.js"></script>
+    <script src="js/performance.js"></script>
+    <script src="js/tutorial.js"></script>
+    <script src="js/statistics.js"></script>
+    <script src="js/proxy.js"></script>
+    <script src="js/local-server.js"></script>
+    <script src="js/ai-opponent.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/guess.js"></script>
+    <script src="js/speed.js"></script>
+</body>
+</html>
